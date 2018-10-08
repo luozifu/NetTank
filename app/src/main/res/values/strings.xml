@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">智慧油罐</string>
+    <string name="user_name">账号</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="tip_user_name">请输入账号</string>
+    <string name="tip_password">请输入密码</string>
+    <string name="oil_management">油站管理</string>
+    <string name="real_time_storage">实时罐存</string>
+    <string name="setting">设置</string>
+</resources>
