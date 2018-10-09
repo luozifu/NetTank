@@ -17,23 +17,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="@dimen/space_large"
-        android:layout_marginRight="@dimen/space_large"
+        android:layout_marginLeft="@dimen/space_l"
+        android:layout_marginRight="@dimen/space_l"
         android:hint="@string/user_name"/>
     <EditText
         android:id="@+id/et_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="@dimen/space_large"
-        android:layout_marginRight="@dimen/space_large"
+        android:layout_marginLeft="@dimen/space_l"
+        android:layout_marginRight="@dimen/space_l"
         android:hint="@string/password"/>
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_large"
-        android:layout_marginRight="@dimen/space_large"
+        android:layout_marginLeft="@dimen/space_l"
+        android:layout_marginRight="@dimen/space_l"
         android:layout_marginTop="30dp"
         android:text="@string/login"/>
     <TextView
@@ -42,9 +42,9 @@
         android:layout_height="wrap_content"
         android:text="中文简体"
         android:textSize="@dimen/text_size_small"
-        android:layout_marginTop="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_l"
         android:layout_gravity="end"
-        android:layout_marginRight="@dimen/space_large"
+        android:layout_marginRight="@dimen/space_l"
         android:textColor="@color/tertiaryText"
         android:background="@color/white"/>
 </LinearLayout>

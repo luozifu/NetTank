@@ -1,8 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.setting.SettingActivity">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".ui.setting.SettingActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/colorPrimary">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_arrow_left"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/space_m"
+            android:background="?selectableItemBackground"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/setting"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@drawable/s_bg_5dp"
+        android:layout_marginTop="@dimen/space_l"
+        android:layout_marginLeft="@dimen/space_m"
+        android:layout_marginRight="@dimen/space_m">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/alarm"
+            android:layout_marginLeft="@dimen/space_l"/>
+        <Switch
+            android:id="@+id/sw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/space_l"
+            android:checked="true"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_quit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_marginLeft="@dimen/title_bar_height"
+        android:layout_marginRight="@dimen/title_bar_height"
+        android:layout_marginTop="@dimen/title_bar_height"
+        android:text="@string/quit"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:elevation="@dimen/space_m"
+        android:background="@drawable/sl_quit"/>
+</LinearLayout>

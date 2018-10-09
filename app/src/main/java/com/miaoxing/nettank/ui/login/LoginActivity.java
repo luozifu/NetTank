@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        
     }
 
     @OnClick({R.id.btn_login, R.id.tv_language})

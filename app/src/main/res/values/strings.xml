@@ -8,4 +8,6 @@
     <string name="oil_management">油站管理</string>
     <string name="real_time_storage">实时罐存</string>
     <string name="setting">设置</string>
+    <string name="alarm">报警推送</string>
+    <string name="quit">退出登录</string>
 </resources>

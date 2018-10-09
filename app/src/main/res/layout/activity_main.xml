@@ -26,7 +26,7 @@
             android:textColor="@color/white"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/space_large"/>
+            android:layout_marginRight="@dimen/space_l"/>
     </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
@@ -37,9 +37,9 @@
         android:padding="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_oil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
