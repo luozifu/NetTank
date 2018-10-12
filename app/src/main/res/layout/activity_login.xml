@@ -19,7 +19,9 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="@dimen/space_l"
         android:layout_marginRight="@dimen/space_l"
-        android:hint="@string/user_name"/>
+        android:hint="@string/user_name"
+        android:drawableLeft="@drawable/ic_account"
+        android:drawablePadding="@dimen/space_s"/>
     <EditText
         android:id="@+id/et_pwd"
         android:layout_width="match_parent"
@@ -27,7 +29,9 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="@dimen/space_l"
         android:layout_marginRight="@dimen/space_l"
-        android:hint="@string/password"/>
+        android:hint="@string/password"
+        android:drawableLeft="@drawable/ic_password"
+        android:drawablePadding="@dimen/space_s"/>
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
