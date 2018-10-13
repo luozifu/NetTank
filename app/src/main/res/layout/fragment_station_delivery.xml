@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_tank"
-            android:layout_width="240dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/s_bg_5dp"
@@ -39,7 +39,7 @@
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_start_time"
-            android:layout_width="240dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/s_bg_5dp"
@@ -61,7 +61,7 @@
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_end_time"
-            android:layout_width="240dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/s_bg_5dp"

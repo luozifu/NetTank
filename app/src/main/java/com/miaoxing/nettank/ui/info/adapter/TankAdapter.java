@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.model.Tank;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -47,7 +48,10 @@ public class TankAdapter extends RecyclerView.Adapter<TankAdapter.TankHolder> {
         holder.tvTankName.setText(tank.tankName);
         holder.tvFuelVol.setText(tank.fuelVol+"L");
         holder.tvFuelName.setText(tank.fuleName);
-        holder.tvPercent.setText(tank.fuelVol*100/tank.capacity+"%");
+        double percent = tank.fuelVol*100/tank.capacity;
+        BigDecimal bg = new BigDecimal(percent);
+        percent = bg.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        holder.tvPercent.setText(percent+"%");
     }
 
     @Override

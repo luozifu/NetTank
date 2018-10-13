@@ -54,6 +54,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.tv_quit:
                 SPUtils.put(getContext(),Constant.PREFERENCES_USER_KEY,"");
                 Intent intent = new Intent(this,LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
         }
