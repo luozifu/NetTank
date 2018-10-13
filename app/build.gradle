@@ -50,4 +50,5 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.0.0-beta01'
     annotationProcessor "androidx.room:room-compiler:2.0.0-beta01"
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.contrarywind:Android-PickerView:4.1.6'
 }

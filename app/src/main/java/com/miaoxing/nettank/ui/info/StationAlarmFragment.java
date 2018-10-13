@@ -7,8 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.miaoxing.nettank.R;
+import com.miaoxing.nettank.util.DateTimeUtils;
 import com.miaoxing.nettank.util.ToastUtils;
+
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,13 +22,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class StationAlarmFragment extends Fragment {
+public class StationAlarmFragment extends Fragment{
     @BindView(R.id.tv_tank)
     TextView tvTank;
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
+
+    TimePickerView startPicker;
+    TimePickerView endPicker;
 
     public StationAlarmFragment() {
 
@@ -59,9 +67,21 @@ public class StationAlarmFragment extends Fragment {
                 break;
             //选择开始时间
             case R.id.tv_start_time:
+                startPicker = new TimePickerBuilder(getContext(), (date, v) -> {
+                        tvStartTime.setText(DateTimeUtils.formatDateTime(date,DateTimeUtils.DF_YYYY_MM_DD));
+                })
+                        .setDate(Calendar.getInstance())
+                        .build();
+                startPicker.show();
                 break;
             //选择结束时间
             case R.id.tv_end_time:
+                endPicker = new TimePickerBuilder(getContext(), (date, v) -> {
+                    tvEndTime.setText(DateTimeUtils.formatDateTime(date,DateTimeUtils.DF_YYYY_MM_DD));
+                })
+                        .setDate(Calendar.getInstance())
+                        .build();
+                endPicker.show();
                 break;
             //重置查询条件
             case R.id.tv_reset:

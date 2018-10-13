@@ -2,7 +2,6 @@ package com.miaoxing.nettank.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.miaoxing.nettank.R;
@@ -13,7 +12,6 @@ import com.miaoxing.nettank.ui.info.StationInfoActivity;
 import com.miaoxing.nettank.ui.main.adapter.FuelAdapter;
 import com.miaoxing.nettank.ui.main.adapter.StationAdapter;
 import com.miaoxing.nettank.ui.setting.SettingActivity;
-import com.miaoxing.nettank.view.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +75,9 @@ public class MainActivity extends BaseActivity {
         rvFuel.setLayoutManager(fuelManger);
         rvFuel.setAdapter(new FuelAdapter(fuelList));
         StationAdapter stationAdapter = new StationAdapter(stationList);
-        stationAdapter.setItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(getContext(),StationInfoActivity.class);
-                startActivity(intent);
-            }
+        stationAdapter.setItemClickListener((view, position) -> {
+            Intent intent = new Intent(getContext(),StationInfoActivity.class);
+            startActivity(intent);
         });
         LinearLayoutManager stationManger = new LinearLayoutManager(getContext());
         stationManger.setOrientation(RecyclerView.VERTICAL);
