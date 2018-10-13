@@ -89,10 +89,9 @@ public class MainActivity extends BaseActivity {
         rvStation.setLayoutManager(stationManger);
         rvStation.setAdapter(stationAdapter);
 
-        //
-        tvStationAmount.setText(R.string.station_amount+stationList.size());
-        tvOnline.setText(R.string.online+stationList.size());
-        tvOffline.setText(R.string.offline+0);
+        tvStationAmount.setText(getString(R.string.station_amount)+stationList.size());
+        tvOnline.setText(getString(R.string.online)+stationList.size());
+        tvOffline.setText(getString(R.string.offline)+0);
     }
 
     @OnClick(R.id.tv_right)
