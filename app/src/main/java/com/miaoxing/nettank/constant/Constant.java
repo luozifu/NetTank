@@ -15,4 +15,8 @@ public class Constant {
      * 选择语言key
      */
     public static final String PREFERENCES_LANGUAGE_KEY = "language";
+    /**
+     * 用戶key
+     */
+    public static final String PREFERENCES_USER_KEY = "user";
 }

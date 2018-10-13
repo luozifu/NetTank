@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity"
+    tools:context=".ui.main.MainActivity"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,14 +19,16 @@
             android:textSize="@dimen/text_size_large"/>
         <TextView
             android:id="@+id/tv_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/bottom_bar_height"
+            android:layout_height="match_parent"
             android:textSize="@dimen/text_size_small"
             android:text="@string/setting"
+            android:background="?selectableItemBackgroundBorderless"
             android:textColor="@color/white"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/space_l"/>
+            android:layout_marginRight="@dimen/space_l"
+            android:gravity="center"/>
     </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
@@ -34,10 +36,10 @@
         android:text="@string/real_time_storage"
         android:textSize="@dimen/text_size_small"
         android:textColor="@color/secondaryText"
-        android:padding="5dp"/>
+        android:padding="@dimen/space_s"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_oil"
+        android:id="@+id/rv_fuel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
@@ -48,21 +50,28 @@
             android:id="@+id/tv_station_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/station_amount"/>
+            android:text="@string/station_amount"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/tertiaryText"/>
         <TextView
             android:id="@+id/tv_online"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_station_amount"
-            android:layout_marginLeft="@dimen/space_s"
-            android:text="@string/online"/>
+            android:layout_marginLeft="@dimen/space_m"
+            android:text="@string/online"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/tertiaryText"
+            />
         <TextView
             android:id="@+id/tv_offline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_online"
-            android:layout_marginLeft="@dimen/space_s"
-            android:text="@string/offline"/>
+            android:layout_marginLeft="@dimen/space_m"
+            android:text="@string/offline"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/tertiaryText"/>
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_station"

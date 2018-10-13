@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/login">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +22,8 @@
         android:layout_marginRight="@dimen/space_l"
         android:hint="@string/user_name"
         android:drawableLeft="@drawable/ic_account"
-        android:drawablePadding="@dimen/space_s"/>
+        android:drawablePadding="@dimen/space_s"
+        android:maxLines="1"/>
     <EditText
         android:id="@+id/et_pwd"
         android:layout_width="match_parent"
@@ -30,6 +32,9 @@
         android:layout_marginLeft="@dimen/space_l"
         android:layout_marginRight="@dimen/space_l"
         android:hint="@string/password"
+        android:inputType="textPassword"
+        android:digits="@string/digits"
+        android:maxLines="1"
         android:drawableLeft="@drawable/ic_password"
         android:drawablePadding="@dimen/space_s"/>
     <Button

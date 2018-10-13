@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.base.BaseActivity;
-import com.miaoxing.nettank.ui.MainActivity;
+import com.miaoxing.nettank.constant.Constant;
+import com.miaoxing.nettank.ui.main.MainActivity;
+import com.miaoxing.nettank.util.SPUtils;
 import com.miaoxing.nettank.util.ToastUtils;
 
 import butterknife.BindView;
@@ -52,6 +54,8 @@ public class LoginActivity extends BaseActivity {
                 //todo 发起登录，成功则跳转到主界面
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
+                SPUtils.put(getContext(),Constant.PREFERENCES_USER_KEY,userName);
+                finish();
                 break;
             //点击选择语言
             case R.id.tv_language:

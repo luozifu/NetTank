@@ -52,6 +52,7 @@ public class SettingActivity extends BaseActivity {
                 break;
             //退出登录
             case R.id.tv_quit:
+                SPUtils.put(getContext(),Constant.PREFERENCES_USER_KEY,"");
                 Intent intent = new Intent(this,LoginActivity.class);
                 startActivity(intent);
                 break;

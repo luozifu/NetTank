@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimaryDark">
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:src="@drawable/ic_arrow_left"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/space_m"
-            android:background="?selectableItemBackground"/>
+            android:background="?selectableItemBackgroundBorderless"/>
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
@@ -41,27 +41,30 @@
         android:layout_height="@dimen/bottom_bar_height"
         android:orientation="horizontal">
         <RadioButton
+            android:checked="true"
             android:id="@+id/rb_detail"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="null"
+            android:button="@null"
             android:gravity="center"
             android:text="@string/inv"/>
         <RadioButton
+            android:checked="false"
             android:id="@+id/rb_alarm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="null"
+            android:button="@null"
             android:gravity="center"
             android:text="@string/alarm"/>
         <RadioButton
+            android:checked="false"
             android:id="@+id/rb_record"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="null"
+            android:button="@null"
             android:gravity="center"
             android:text="@string/delivery"/>
     </RadioGroup>

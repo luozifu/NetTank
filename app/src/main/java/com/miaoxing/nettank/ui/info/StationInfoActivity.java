@@ -33,6 +33,13 @@ public class StationInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statin_info);
         ButterKnife.bind(this);
+        //默认选中油管信息界面
+        mStationDetailFragment = StationDetailFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.content,mStationDetailFragment);
+        transaction.commit();
+        currentFragment = mStationDetailFragment;
+
         mRg.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId){
                 //罐存详情

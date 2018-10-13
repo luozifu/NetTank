@@ -27,4 +27,12 @@
     <string name="all">全部</string>
     <string name="tip_start_time">请选择开始时间</string>
     <string name="tip_end_time">请选择结束时间</string>
+    <string name="collect_time">最新数据采集时间:</string>
+    <string name="fuel_level">油高(mm):</string>
+    <string name="capacity">总容(L):</string>
+    <string name="water_level">水高(mm):</string>
+    <string name="temperature">温度(℃):</string>
+    <string name="fuel_vol">存量</string>
+    <string name="total">总容</string>
+    <string name="digits">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
 </resources>

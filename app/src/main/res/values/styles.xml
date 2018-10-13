@@ -10,6 +10,10 @@
         <item name="android:textSize">14dp</item>
     </style>
 
+    <style name="FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
 
 </resources>
