@@ -2,13 +2,14 @@ package com.miaoxing.nettank.ui.info;
 
 import android.os.Bundle;
 import android.widget.FrameLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.base.BaseActivity;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,32 +25,62 @@ public class StationInfoActivity extends BaseActivity {
 
     private StationDetailFragment mStationDetailFragment;
     private StationAlarmFragment mStationAlarmFragment;
-    private StationRecordFragment mStationRecordFragment;
+    private StationDeliveryFragment mStationDeliveryFragment;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statin_info);
         ButterKnife.bind(this);
-        mRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    //罐存详情
-                    case R.id.rb_detail:
-                        if(null == mStationDetailFragment){
-                        }
-                        break;
-                    //报警
-                    case R.id.rb_alarm:
-                        break;
-                    //进油记录
-                    case R.id.rb_record:
-                        break;
-                }
+        mRg.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId){
+                //罐存详情
+                case R.id.rb_detail:
+                    if(null == mStationDetailFragment){
+                        mStationDetailFragment = StationDetailFragment.newInstance();
+                    }
+                    switchFragment(mStationDetailFragment);
+                    mTvTitle.setText(R.string.inv);
+                    break;
+                //报警
+                case R.id.rb_alarm:
+                    if(null == mStationAlarmFragment){
+                        mStationAlarmFragment = StationAlarmFragment.newInstance();
+                    }
+                    switchFragment(mStationAlarmFragment);
+                    mTvTitle.setText(R.string.alarm);
+                    break;
+                //进油记录
+                case R.id.rb_record:
+                    if(null == mStationDeliveryFragment){
+                        mStationDeliveryFragment = StationDeliveryFragment.newInstance();
+                    }
+                    switchFragment(mStationDeliveryFragment);
+                    mTvTitle.setText(R.string.delivery);
+                    break;
             }
         });
     }
+
+    //Fragment切换
+    private void switchFragment(Fragment targetFragment) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        if (!targetFragment.isAdded()) {
+            transaction
+                    .hide(currentFragment)
+                    .add(R.id.content, targetFragment)
+                    .commit();
+        } else {
+            transaction
+                    .hide(currentFragment)
+                    .show(targetFragment)
+                    .commit();
+        }
+        currentFragment = targetFragment;
+    }
+
 
     @OnClick(R.id.iv_back)
     public void onViewClicked() {

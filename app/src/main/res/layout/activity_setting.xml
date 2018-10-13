@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/alarm"
+            android:text="@string/alarm_push"
             android:layout_marginLeft="@dimen/space_l"/>
         <Switch
             android:id="@+id/sw"

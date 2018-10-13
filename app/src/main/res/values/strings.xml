@@ -8,9 +8,23 @@
     <string name="oil_management">油站管理</string>
     <string name="real_time_storage">实时罐存</string>
     <string name="setting">设置</string>
-    <string name="alarm">报警推送</string>
+    <string name="alarm_push">报警推送</string>
     <string name="quit">退出登录</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="station_amount">油站数量:</string>
+    <string name="online">在线:</string>
+    <string name="offline">离线:</string>
+    <string name="inv">罐存</string>
+    <string name="alarm">报警</string>
+    <string name="delivery">进油</string>
+    <string name="tank">油罐:</string>
+    <string name="start_time">开始时间:</string>
+    <string name="end_time">结束时间:</string>
+    <string name="start_time_hint">选择开始时间</string>
+    <string name="end_time_hint">选择结束时间</string>
+    <string name="reset">重置</string>
+    <string name="search">查询</string>
+    <string name="all">全部</string>
+    <string name="tip_start_time">请选择开始时间</string>
+    <string name="tip_end_time">请选择结束时间</string>
 </resources>

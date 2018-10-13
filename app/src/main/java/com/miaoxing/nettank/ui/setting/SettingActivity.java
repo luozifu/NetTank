@@ -3,7 +3,6 @@ package com.miaoxing.nettank.ui.setting;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.miaoxing.nettank.R;
@@ -29,15 +28,12 @@ public class SettingActivity extends BaseActivity {
         boolean isChecked = (Boolean) SPUtils.get(this,
                 Constant.PREFERENCES_ALARM_KEY,true);
         sw.setChecked(isChecked);
-        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //todo 开启或者关闭推送
-                if(isChecked){
+        sw.setOnCheckedChangeListener((buttonView, isChecked1) -> {
+            //todo 开启或者关闭推送
+            if(isChecked1){
 
-                }else {
+            }else {
 
-                }
             }
         });
     }

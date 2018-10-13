@@ -45,19 +45,25 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="null"/>
+            android:button="null"
+            android:gravity="center"
+            android:text="@string/inv"/>
         <RadioButton
             android:id="@+id/rb_alarm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="null"/>
+            android:button="null"
+            android:gravity="center"
+            android:text="@string/alarm"/>
         <RadioButton
             android:id="@+id/rb_record"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="null"/>
+            android:button="null"
+            android:gravity="center"
+            android:text="@string/delivery"/>
     </RadioGroup>
 
 </LinearLayout>

@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class StationAlarmFragment extends Fragment {
+public class StationDeliveryFragment extends Fragment {
     @BindView(R.id.tv_tank)
     TextView tvTank;
     @BindView(R.id.tv_start_time)
@@ -25,15 +25,15 @@ public class StationAlarmFragment extends Fragment {
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
 
-    public StationAlarmFragment() {
+    public StationDeliveryFragment() {
 
     }
 
-    public static StationAlarmFragment newInstance() {
+    public static StationDeliveryFragment newInstance() {
 
         Bundle args = new Bundle();
-        StationAlarmFragment fragment = new StationAlarmFragment();
-        args.putString("param", "StationAlarmFragment");
+        StationDeliveryFragment fragment = new StationDeliveryFragment();
+        args.putString("param", "StationDeliveryFragment");
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,6 +49,7 @@ public class StationAlarmFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
     @OnClick({R.id.tv_tank, R.id.tv_start_time, R.id.tv_end_time, R.id.tv_reset, R.id.tv_search})
