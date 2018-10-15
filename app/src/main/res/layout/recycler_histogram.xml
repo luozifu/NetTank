@@ -20,13 +20,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffebee"/>
+            android:background="#EEEEEE"/>
         <TextView
             android:id="@+id/tv_fuel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_alignParentBottom="true"
-            android:background="#00ff00"/>
+            android:background="#4DBA79"/>
     </RelativeLayout>
     <TextView
         android:id="@+id/tv_fuel_vol"

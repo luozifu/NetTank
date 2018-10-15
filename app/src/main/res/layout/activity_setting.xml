@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.setting.SettingActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/bg_gray">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
@@ -30,16 +31,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@drawable/s_bg_5dp"
-        android:layout_marginTop="@dimen/space_l"
-        android:layout_marginLeft="@dimen/space_m"
-        android:layout_marginRight="@dimen/space_m">
+        android:layout_marginTop="@dimen/title_bar_height"
+        android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/alarm_push"
-            android:layout_marginLeft="@dimen/space_l"/>
+            android:layout_marginLeft="@dimen/title_bar_height"/>
         <Switch
             android:id="@+id/sw"
             android:layout_width="wrap_content"
@@ -55,10 +54,10 @@
         android:layout_height="@dimen/title_bar_height"
         android:layout_marginLeft="@dimen/title_bar_height"
         android:layout_marginRight="@dimen/title_bar_height"
-        android:layout_marginTop="@dimen/title_bar_height"
+        android:layout_marginTop="100dp"
         android:text="@string/quit"
         android:textColor="@color/white"
         android:gravity="center"
-        android:elevation="@dimen/space_m"
+        android:elevation="@dimen/space_s"
         android:background="@drawable/sl_quit"/>
 </LinearLayout>
