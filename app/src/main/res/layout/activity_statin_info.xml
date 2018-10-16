@@ -51,7 +51,7 @@
             android:gravity="center"
             android:text="@string/inv"
             android:textColor="@color/white"
-            android:drawableTop="@drawable/ic_arrow_down"/>
+            android:drawableTop="@drawable/ic_tank_pressed"/>
         <RadioButton
             android:background="@drawable/sl_tab"
             android:checked="false"
@@ -63,7 +63,7 @@
             android:gravity="center"
             android:text="@string/alarm"
             android:textColor="@color/white"
-            android:drawableTop="@drawable/ic_arrow_down"/>
+            android:drawableTop="@drawable/ic_alarm_default"/>
         <RadioButton
             android:background="@drawable/sl_tab"
             android:checked="false"
@@ -74,8 +74,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/delivery"
-            android:textColor="@color/white"
-            android:drawableTop="@drawable/ic_arrow_down"/>
+            android:textColor="@color/white"/>
     </RadioGroup>
 
 </LinearLayout>

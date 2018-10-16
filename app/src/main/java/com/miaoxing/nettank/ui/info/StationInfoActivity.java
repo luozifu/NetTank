@@ -1,7 +1,9 @@
 package com.miaoxing.nettank.ui.info;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.FrameLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -22,6 +24,12 @@ public class StationInfoActivity extends BaseActivity {
     FrameLayout mContent;
     @BindView(R.id.rg)
     RadioGroup mRg;
+    @BindView(R.id.rb_detail)
+    RadioButton rbDetail;
+    @BindView(R.id.rb_alarm)
+    RadioButton rbAlarm;
+    @BindView(R.id.rb_record)
+    RadioButton rbRecord;
 
     private StationDetailFragment mStationDetailFragment;
     private StationAlarmFragment mStationAlarmFragment;
@@ -33,18 +41,21 @@ public class StationInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statin_info);
         ButterKnife.bind(this);
+
+        initRadioBtn();
+
         //默认选中油管信息界面
         mStationDetailFragment = StationDetailFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.content,mStationDetailFragment);
+        transaction.add(R.id.content, mStationDetailFragment);
         transaction.commit();
         currentFragment = mStationDetailFragment;
 
         mRg.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId){
+            switch (checkedId) {
                 //罐存详情
                 case R.id.rb_detail:
-                    if(null == mStationDetailFragment){
+                    if (null == mStationDetailFragment) {
                         mStationDetailFragment = StationDetailFragment.newInstance();
                     }
                     switchFragment(mStationDetailFragment);
@@ -52,7 +63,7 @@ public class StationInfoActivity extends BaseActivity {
                     break;
                 //报警
                 case R.id.rb_alarm:
-                    if(null == mStationAlarmFragment){
+                    if (null == mStationAlarmFragment) {
                         mStationAlarmFragment = StationAlarmFragment.newInstance();
                     }
                     switchFragment(mStationAlarmFragment);
@@ -60,7 +71,7 @@ public class StationInfoActivity extends BaseActivity {
                     break;
                 //进油记录
                 case R.id.rb_record:
-                    if(null == mStationDeliveryFragment){
+                    if (null == mStationDeliveryFragment) {
                         mStationDeliveryFragment = StationDeliveryFragment.newInstance();
                     }
                     switchFragment(mStationDeliveryFragment);
@@ -68,6 +79,12 @@ public class StationInfoActivity extends BaseActivity {
                     break;
             }
         });
+    }
+
+    private void initRadioBtn() {
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_tank_pressed);
+        drawable.setBounds(0,0,20,20);
+        rbDetail.setCompoundDrawablesRelativeWithIntrinsicBounds(null,drawable,null,null);
     }
 
     //Fragment切换
