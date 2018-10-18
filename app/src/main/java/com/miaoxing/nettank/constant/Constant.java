@@ -19,4 +19,14 @@ public class Constant {
      * 用戶key
      */
     public static final String PREFERENCES_USER_KEY = "user";
+
+    /**
+     * 成功
+     */
+    public static final int CODE_SUCCESS = 1;
+
+    /**
+     * 失败
+     */
+    public static final int CODE_FAIL = 0;
 }
