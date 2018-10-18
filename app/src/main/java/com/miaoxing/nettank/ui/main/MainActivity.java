@@ -6,14 +6,18 @@ import android.widget.TextView;
 
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.base.BaseActivity;
+import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.model.Fuel;
 import com.miaoxing.nettank.model.Station;
+import com.miaoxing.nettank.model.StationStat;
+import com.miaoxing.nettank.net.ApiClient;
+import com.miaoxing.nettank.net.Result;
 import com.miaoxing.nettank.ui.info.StationInfoActivity;
 import com.miaoxing.nettank.ui.main.adapter.FuelAdapter;
 import com.miaoxing.nettank.ui.main.adapter.StationAdapter;
 import com.miaoxing.nettank.ui.setting.SettingActivity;
+import com.miaoxing.nettank.util.SPUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
@@ -37,6 +45,7 @@ public class MainActivity extends BaseActivity {
 
     private List<Fuel> fuelList;
     private List<Station> stationList;
+    private StationStat mStationStat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +62,37 @@ public class MainActivity extends BaseActivity {
     }
 
     private void mock() {
-        fuelList = new ArrayList<>();
-        stationList = new ArrayList<>();
-        for(int i=0;i<3;i++){
-            Fuel fuel = new Fuel();
-            fuel.fuelName = i+"#";
-            fuel.capacity = 3000.0;
-            fuel.fuelVol = 1131.2;
-            fuelList.add(fuel);
-        }
-        for(int i=0;i<2;i++){
-            Station station = new Station();
-            station.stationName = "station"+i;
-            stationList.add(station);
-        }
+        String userID = (String) SPUtils.get(getContext(), Constant.PREFERENCES_USER_KEY, "");
+        ApiClient.getService()
+                .getMain(userID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<MainResponse>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<MainResponse> mainResponseResult) {
+                        if (mainResponseResult.getCode() == Constant.CODE_SUCCESS) {
+                            fuelList = mainResponseResult.getData().mFuelList;
+                            stationList = mainResponseResult.getData().mStationList;
+                            mStationStat = mainResponseResult.getData().mStationStat;
+                            initView();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void initView() {
@@ -76,7 +102,7 @@ public class MainActivity extends BaseActivity {
         rvFuel.setAdapter(new FuelAdapter(fuelList));
         StationAdapter stationAdapter = new StationAdapter(stationList);
         stationAdapter.setItemClickListener((view, position) -> {
-            Intent intent = new Intent(getContext(),StationInfoActivity.class);
+            Intent intent = new Intent(getContext(), StationInfoActivity.class);
             startActivity(intent);
         });
         LinearLayoutManager stationManger = new LinearLayoutManager(getContext());
@@ -84,9 +110,9 @@ public class MainActivity extends BaseActivity {
         rvStation.setLayoutManager(stationManger);
         rvStation.setAdapter(stationAdapter);
 
-        tvStationAmount.setText(getString(R.string.station_amount)+stationList.size());
-        tvOnline.setText(getString(R.string.online)+stationList.size());
-        tvOffline.setText(getString(R.string.offline)+0);
+        tvStationAmount.setText(getString(R.string.station_amount) + mStationStat.stationCount);
+        tvOnline.setText(getString(R.string.online) + mStationStat.stationUp);
+        tvOffline.setText(getString(R.string.offline) + mStationStat.stationDown);
     }
 
     @OnClick(R.id.tv_right)

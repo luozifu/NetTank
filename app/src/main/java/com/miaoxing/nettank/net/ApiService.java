@@ -2,6 +2,7 @@ package com.miaoxing.nettank.net;
 
 
 import com.miaoxing.nettank.ui.login.LoginResponse;
+import com.miaoxing.nettank.ui.main.MainResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -30,7 +31,7 @@ public interface ApiService {
      */
     @POST("Api/stat")
     @FormUrlEncoded
-    Observable getMain(@Field("UserID") String userID);
+    Observable<Result<MainResponse>> getMain(@Field("UserID") String userID);
 
     /**
      * 获取油站详情

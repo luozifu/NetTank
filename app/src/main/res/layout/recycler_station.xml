@@ -16,7 +16,7 @@
             android:id="@+id/iv"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/ic_station"/>
         <TextView
             android:id="@+id/tv_station_name"
             android:layout_width="wrap_content"
