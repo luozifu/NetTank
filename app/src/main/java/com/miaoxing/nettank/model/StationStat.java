@@ -13,8 +13,10 @@ public class StationStat implements Serializable {
 
     @SerializedName("station_count")
     public int stationCount;
+
     @SerializedName("station_down")
     public int stationDown;
+
     @SerializedName("station_up")
     public int stationUp;
 

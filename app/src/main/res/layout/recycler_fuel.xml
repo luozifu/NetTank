@@ -2,13 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/s_bg_fuel">
     <TextView
         android:id="@+id/tv_fuel_name"
         android:layout_width="@dimen/bottom_bar_height"
         android:layout_height="match_parent"
         android:text="0#"
         android:gravity="center"/>
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/black"/>
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,8 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/tv_fuel_vol"
-            android:layout_toRightOf="@id/tv_fuel_vol"
-            android:layout_marginLeft="@dimen/bottom_bar_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/bottom_bar_height"
             android:text="@string/total"/>
     </RelativeLayout>
 </LinearLayout>

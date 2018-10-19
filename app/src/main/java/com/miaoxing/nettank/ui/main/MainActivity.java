@@ -20,6 +20,8 @@ import com.miaoxing.nettank.util.SPUtils;
 
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -52,13 +54,16 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        //分割线
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.s_fuel_divider));
+        rvFuel.addItemDecoration(divider);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mock();
-        initView();
     }
 
     private void mock() {
@@ -100,6 +105,7 @@ public class MainActivity extends BaseActivity {
         fuelManger.setOrientation(RecyclerView.VERTICAL);
         rvFuel.setLayoutManager(fuelManger);
         rvFuel.setAdapter(new FuelAdapter(fuelList));
+
         StationAdapter stationAdapter = new StationAdapter(stationList);
         stationAdapter.setItemClickListener((view, position) -> {
             Intent intent = new Intent(getContext(), StationInfoActivity.class);
