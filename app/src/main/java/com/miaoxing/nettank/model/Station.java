@@ -21,6 +21,13 @@ public class Station implements Serializable{
      */
     @SerializedName("StationName")
     public String stationName;
+
+    /**
+     * 油站状态
+     */
+    @SerializedName("Status")
+    public int status;
+
     /**
      * 包含的油品
      */

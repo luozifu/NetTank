@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onSubscribe(Disposable d) {
 
+
                     }
 
                     @Override

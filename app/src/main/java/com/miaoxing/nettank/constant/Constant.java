@@ -29,4 +29,9 @@ public class Constant {
      * 失败
      */
     public static final int CODE_FAIL = 0;
+
+    /**
+     * 在线状态
+     */
+    public static final int STATUS_ONLINE = 1;
 }
