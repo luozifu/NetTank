@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/space_s">
+
+    <TextView
+        android:id="@+id/tv_tank_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1#油罐"/>
+
+    <TextView
+        android:id="@+id/tv_fuel_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="92#"
+        android:layout_toRightOf="@id/tv_tank_name"
+        android:layout_marginLeft="@dimen/space_m"/>
+    <TextView
+        android:id="@+id/tv_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_tank_name"
+        android:layout_marginTop="@dimen/space_m"/>
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@id/tv_alarm"
+        android:text="2018-09-07 20:57:41"
+        android:textSize="@dimen/text_size_small"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/tertiaryText"/>
+</RelativeLayout>

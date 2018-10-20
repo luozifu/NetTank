@@ -13,6 +13,8 @@ import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.net.ApiClient;
 import com.miaoxing.nettank.net.Result;
+import com.miaoxing.nettank.ui.info.adapter.AlarmAdapter;
+import com.miaoxing.nettank.ui.info.response.AlarmResponse;
 import com.miaoxing.nettank.ui.info.response.TankResponse;
 import com.miaoxing.nettank.util.DateTimeUtils;
 import com.miaoxing.nettank.util.ToastUtils;
@@ -20,11 +22,14 @@ import com.miaoxing.nettank.view.dialog.BottomPickerFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +56,9 @@ public class StationAlarmFragment extends Fragment {
     private BottomPickerFragment pickerFragment;
     private String[] optionArray;
     private int mPosition = -1;
+    private int page = 1;
+    private List<AlarmResponse> mAlarmResponseList;
+    private AlarmAdapter mAlarmAdapter;
 
     public StationAlarmFragment() {
 
@@ -127,9 +135,54 @@ public class StationAlarmFragment extends Fragment {
                     ToastUtils.showToast(getContext(), R.string.tip_end_time);
                     return;
                 }
-                //todo 调用接口显示查询结果
+                mAlarmResponseList = new ArrayList<>();
+                getRecords(startTime, endTime);
+
                 break;
         }
+    }
+
+    private void getRecords(String startTime, String endTime) {
+        Map<String, Object> map = new HashMap<>();
+        if (mPosition != -1) {
+            map.put("TankID", mTankResponseList.get(mPosition).tankID);
+        }
+        map.put("StationID", stationID);
+        map.put("start_time", startTime);
+        map.put("end_time", endTime);
+        map.put("page", page);
+        ApiClient.getService()
+                .getAlarmList(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<List<AlarmResponse>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<List<AlarmResponse>> result) {
+                        if (result.getCode() == Constant.CODE_SUCCESS) {
+                            mAlarmResponseList = result.getData();
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                            mRvResult.setLayoutManager(layoutManager);
+                            mAlarmAdapter = new AlarmAdapter(mAlarmResponseList, getContext());
+                            mRvResult.setAdapter(mAlarmAdapter);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void getTankList() {

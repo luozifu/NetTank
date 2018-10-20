@@ -1,6 +1,8 @@
 package com.miaoxing.nettank.net;
 
 
+import com.miaoxing.nettank.ui.info.response.AlarmResponse;
+import com.miaoxing.nettank.ui.info.response.RecordResponse;
 import com.miaoxing.nettank.ui.info.response.StationInfoResponse;
 import com.miaoxing.nettank.ui.info.response.TankResponse;
 import com.miaoxing.nettank.ui.login.LoginResponse;
@@ -69,7 +71,7 @@ public interface ApiService {
      */
     @POST("Api/record_list")
     @FormUrlEncoded
-    Observable getRecordList(@FieldMap Map<String, Object> map);
+    Observable<Result<List<RecordResponse>>> getRecordList(@FieldMap Map<String, Object> map);
 
     /**
      * 获取报警记录
@@ -79,7 +81,7 @@ public interface ApiService {
      */
     @POST("Api/tankalarm")
     @FormUrlEncoded
-    Observable getAlarmList(@FieldMap Map<String, Object> map);
+    Observable<Result<List<AlarmResponse>>> getAlarmList(@FieldMap Map<String, Object> map);
 
     /**
      * 报警推送
