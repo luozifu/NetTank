@@ -1,11 +1,17 @@
 package com.miaoxing.nettank.net;
 
 
+import com.miaoxing.nettank.ui.info.response.StationInfoResponse;
+import com.miaoxing.nettank.ui.info.response.TankResponse;
 import com.miaoxing.nettank.ui.login.LoginResponse;
 import com.miaoxing.nettank.ui.main.MainResponse;
 
+import java.util.List;
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
@@ -16,6 +22,7 @@ import retrofit2.http.POST;
 public interface ApiService {
     /**
      * 登录
+     *
      * @param userID
      * @param pwd
      * @return
@@ -26,6 +33,7 @@ public interface ApiService {
 
     /**
      * 首页
+     *
      * @param userID
      * @return
      */
@@ -35,58 +43,47 @@ public interface ApiService {
 
     /**
      * 获取油站详情
+     *
      * @param stationID
      * @return
      */
     @POST("Api/station_info")
     @FormUrlEncoded
-    Observable getStationInfo(@Field("StationID") String stationID);
+    Observable<Result<StationInfoResponse>> getStationInfo(@Field("StationID") String stationID);
 
     /**
      * 获取油站下的所有油罐
+     *
      * @param stationID
      * @return
      */
     @POST("Api/tank_list")
     @FormUrlEncoded
-    Observable getTankList(@Field("StationID") String stationID);
+    Observable<Result<List<TankResponse>>> getTankList(@Field("StationID") String stationID);
 
     /**
      * 获取进油记录
-     * @param stationID
-     * @param startTime
-     * @param endTime
-     * @param page
-     * @param tankID
+     *
+     * @param map
      * @return
      */
     @POST("Api/record_list")
     @FormUrlEncoded
-    Observable getRecordList(@Field("StationID") String stationID,
-                             @Field("start_time") String startTime,
-                             @Field("end_time") String endTime,
-                             @Field("page") int page,
-                             @Field("TankID") int tankID);
+    Observable getRecordList(@FieldMap Map<String, Object> map);
 
     /**
      * 获取报警记录
-     * @param stationID
-     * @param startTime
-     * @param endTime
-     * @param page
-     * @param tankID
+     *
+     * @param map
      * @return
      */
     @POST("Api/tankalarm")
     @FormUrlEncoded
-    Observable getAlarmList(@Field("StationID") String stationID,
-                             @Field("start_time") String startTime,
-                             @Field("end_time") String endTime,
-                             @Field("page") int page,
-                             @Field("TankID") int tankID);
+    Observable getAlarmList(@FieldMap Map<String, Object> map);
 
     /**
      * 报警推送
+     *
      * @param userID
      * @return
      */

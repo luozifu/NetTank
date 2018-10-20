@@ -34,4 +34,37 @@ public class Constant {
      * 在线状态
      */
     public static final int STATUS_ONLINE = 1;
+
+    /**
+     * 水浮子无效
+     */
+    public static final int ALARM_WATER_FLOAT = 1;
+    /**
+     * 检查不到探测棒
+     */
+    public static final int ALARM_ALPENSTOCK = 2;
+    /**
+     * 低温
+     */
+    public static final int ALARM_LOW_TMP = 3;
+    /**
+     * 高温
+     */
+    public static final int ALARM_HIGH_TMP = 4;
+    /**
+     * 低水位
+     */
+    public static final int ALARM_WATER_LOW = 5;
+    /**
+     * 高水位
+     */
+    public static final int ALARM_WATER_HIGH = 6;
+    /**
+     * 低油位
+     */
+    public static final int ALARM_FUEL_LOW = 7;
+    /**
+     * 高油位
+     */
+    public static final int ALARM_FUEL_HIGH = 8;
 }

@@ -2,13 +2,16 @@ package com.miaoxing.nettank.ui.info;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.base.BaseActivity;
+import com.miaoxing.nettank.util.ScreenUtils;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,6 +33,8 @@ public class StationInfoActivity extends BaseActivity {
     RadioButton rbAlarm;
     @BindView(R.id.rb_record)
     RadioButton rbRecord;
+    @BindView(R.id.iv_refresh)
+    ImageView mIvRefresh;
 
     private StationDetailFragment mStationDetailFragment;
     private StationAlarmFragment mStationAlarmFragment;
@@ -44,7 +49,7 @@ public class StationInfoActivity extends BaseActivity {
 
         initRadioBtn();
 
-        //默认选中油管信息界面
+        //默认选中油罐信息界面
         mStationDetailFragment = StationDetailFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.content, mStationDetailFragment);
@@ -60,6 +65,7 @@ public class StationInfoActivity extends BaseActivity {
                     }
                     switchFragment(mStationDetailFragment);
                     mTvTitle.setText(R.string.inv);
+                    mIvRefresh.setVisibility(View.VISIBLE);
                     break;
                 //报警
                 case R.id.rb_alarm:
@@ -68,6 +74,7 @@ public class StationInfoActivity extends BaseActivity {
                     }
                     switchFragment(mStationAlarmFragment);
                     mTvTitle.setText(R.string.alarm);
+                    mIvRefresh.setVisibility(View.GONE);
                     break;
                 //进油记录
                 case R.id.rb_record:
@@ -76,15 +83,25 @@ public class StationInfoActivity extends BaseActivity {
                     }
                     switchFragment(mStationDeliveryFragment);
                     mTvTitle.setText(R.string.delivery);
+                    mIvRefresh.setVisibility(View.GONE);
                     break;
             }
         });
     }
 
     private void initRadioBtn() {
-        Drawable drawable = getResources().getDrawable(R.drawable.ic_tank_pressed);
-        drawable.setBounds(0,0,20,20);
-        rbDetail.setCompoundDrawablesRelativeWithIntrinsicBounds(null,drawable,null,null);
+        int px = ScreenUtils.dp2px(30);
+        Drawable drawable1 = getResources().getDrawable(R.drawable.ic_tank_pressed);
+        drawable1.setBounds(0, 0, px, px);
+        rbDetail.setCompoundDrawables(null, drawable1, null, null);
+
+        Drawable drawable2 = getResources().getDrawable(R.drawable.ic_alarm_default);
+        drawable2.setBounds(0, 0, px, px);
+        rbAlarm.setCompoundDrawables(null, drawable2, null, null);
+
+        Drawable drawable3 = getResources().getDrawable(R.drawable.ic_water_default);
+        drawable3.setBounds(0, 0, px, px);
+        rbRecord.setCompoundDrawables(null, drawable3, null, null);
     }
 
     //Fragment切换
@@ -106,8 +123,19 @@ public class StationInfoActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.iv_back)
-    public void onViewClicked() {
-        finish();
+    @OnClick({R.id.iv_back, R.id.iv_refresh})
+    public void onViewClicked(View view) {
+
+        switch (view.getId()) {
+            //返回
+            case R.id.iv_back:
+                finish();
+                break;
+            //刷新
+            case R.id.iv_refresh:
+                mStationDetailFragment.onClickRefresh();
+                break;
+        }
     }
+
 }

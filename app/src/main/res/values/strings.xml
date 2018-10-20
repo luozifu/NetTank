@@ -36,4 +36,8 @@
     <string name="total">总容</string>
     <string name="digits">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="tip_account_error">账户或者密码错误</string>
+    <string name="online_bracket">(在线)</string>
+    <string name="offline_bracket">(离线)</string>
+    <string name="vol_short">存</string>
+    <string name="capacity_short">总</string>
 </resources>

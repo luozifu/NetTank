@@ -8,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.miaoxing.nettank.R;
+import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.model.Fuel;
 import com.miaoxing.nettank.model.Tank;
+import com.miaoxing.nettank.net.ApiClient;
+import com.miaoxing.nettank.net.Result;
 import com.miaoxing.nettank.ui.info.adapter.HistogramAdapter;
+import com.miaoxing.nettank.ui.info.response.StationInfoResponse;
 import com.miaoxing.nettank.ui.info.adapter.TankAdapter;
 
 import java.util.ArrayList;
@@ -26,9 +30,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
-public class StationDetailFragment extends Fragment {
+public class StationDetailFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
 
     @BindView(R.id.tv_collect_time)
@@ -42,6 +50,10 @@ public class StationDetailFragment extends Fragment {
 
     private List<Tank> tankList;
     private List<Fuel> fuelList;
+
+    private String stationID;
+    private HistogramAdapter histogramAdapter;
+    private TankAdapter tankAdapter;
 
     public StationDetailFragment() {
 
@@ -61,50 +73,79 @@ public class StationDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_station_detail, container, false);
         ButterKnife.bind(this, view);
+        stationID = getActivity().getIntent().getStringExtra("stationID");
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        swipe.setOnRefreshListener(this);
+        //添加自定义分割线
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.s_divider));
+        rvTank.addItemDecoration(divider);
         mock();
+    }
 
+    private void initView() {
         LinearLayoutManager histogramManager = new LinearLayoutManager(getContext());
         histogramManager.setOrientation(RecyclerView.HORIZONTAL);
         rvHistogram.setLayoutManager(histogramManager);
-        rvHistogram.setAdapter(new HistogramAdapter(fuelList));
+        histogramAdapter = new HistogramAdapter(fuelList);
+        rvHistogram.setAdapter(histogramAdapter);
 
         LinearLayoutManager tankManager = new LinearLayoutManager(getContext());
         tankManager.setOrientation(RecyclerView.VERTICAL);
         rvTank.setLayoutManager(tankManager);
-        //添加自定义分割线
-        DividerItemDecoration divider = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
-        divider.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.s_divider));
-        rvTank.addItemDecoration(divider);
-        rvTank.setAdapter(new TankAdapter(tankList));
+        tankAdapter = new TankAdapter(tankList);
+        rvTank.setAdapter(tankAdapter);
     }
 
-    private void mock(){
-
+    private void mock() {
         tankList = new ArrayList<>();
         fuelList = new ArrayList<>();
-        for(int i = 0;i<2;i++){
-            Tank tank = new Tank();
-            tank.capacity = 3000;
-            tank.fuelLevel = 200;
-            tank.waterLevel = 10;
-            tank.temperature = 27;
-            tank.fuleName = i+"#";
-            tank.tankName = i+"罐";
-            tank.fuelVol = 1000;
-            Fuel fuel = new Fuel();
-            fuel.fuelName = tank.fuleName;
-            fuel.capacity = tank.capacity;
-            fuel.fuelVol = tank.fuelVol;
-            tankList.add(tank);
-            fuelList.add(fuel);
-        }
 
+        ApiClient.getService()
+                .getStationInfo(stationID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<StationInfoResponse>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<StationInfoResponse> stationInfoResponseResult) {
+                        if (stationInfoResponseResult.getCode() == Constant.CODE_SUCCESS) {
+                            tankList = stationInfoResponseResult.getData().mTankList;
+                            fuelList = stationInfoResponseResult.getData().mFuelList;
+                            initView();
+                            tvCollectTime.setText(getString(R.string.collect_time)
+                                    + stationInfoResponseResult.getData().updateTime);
+                            swipe.setRefreshing(false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
+    @Override
+    public void onRefresh() {
+        mock();
+    }
+
+    public void onClickRefresh() {
+        mock();
+    }
 }

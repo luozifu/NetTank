@@ -10,35 +10,53 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.miaoxing.nettank.R;
+import com.miaoxing.nettank.constant.Constant;
+import com.miaoxing.nettank.net.ApiClient;
+import com.miaoxing.nettank.net.Result;
+import com.miaoxing.nettank.ui.info.response.TankResponse;
 import com.miaoxing.nettank.util.DateTimeUtils;
 import com.miaoxing.nettank.util.ToastUtils;
+import com.miaoxing.nettank.view.dialog.BottomPickerFragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class StationAlarmFragment extends Fragment{
+public class StationAlarmFragment extends Fragment {
     @BindView(R.id.tv_tank)
     TextView tvTank;
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
+    @BindView(R.id.rv_result)
+    RecyclerView mRvResult;
 
     TimePickerView startPicker;
     TimePickerView endPicker;
+    private List<TankResponse> mTankResponseList;
+    private String stationID;
+    private BottomPickerFragment pickerFragment;
+    private String[] optionArray;
+    private int mPosition = -1;
 
     public StationAlarmFragment() {
 
     }
 
     public static StationAlarmFragment newInstance() {
-
         Bundle args = new Bundle();
         StationAlarmFragment fragment = new StationAlarmFragment();
         args.putString("param", "StationAlarmFragment");
@@ -51,7 +69,13 @@ public class StationAlarmFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_station_delivery, container, false);
         ButterKnife.bind(this, view);
+        initData();
         return view;
+    }
+
+    private void initData() {
+        stationID = getActivity().getIntent().getStringExtra("stationID");
+        mTankResponseList = new ArrayList<>();
     }
 
     @Override
@@ -64,11 +88,12 @@ public class StationAlarmFragment extends Fragment{
         switch (view.getId()) {
             //选择油罐
             case R.id.tv_tank:
+                getTankList();
                 break;
             //选择开始时间
             case R.id.tv_start_time:
                 startPicker = new TimePickerBuilder(getContext(), (date, v) -> {
-                        tvStartTime.setText(DateTimeUtils.formatDateTime(date,DateTimeUtils.DF_YYYY_MM_DD));
+                    tvStartTime.setText(DateTimeUtils.formatDateTime(date, DateTimeUtils.DF_YYYY_MM_DD));
                 })
                         .setDate(Calendar.getInstance())
                         .build();
@@ -77,7 +102,7 @@ public class StationAlarmFragment extends Fragment{
             //选择结束时间
             case R.id.tv_end_time:
                 endPicker = new TimePickerBuilder(getContext(), (date, v) -> {
-                    tvEndTime.setText(DateTimeUtils.formatDateTime(date,DateTimeUtils.DF_YYYY_MM_DD));
+                    tvEndTime.setText(DateTimeUtils.formatDateTime(date, DateTimeUtils.DF_YYYY_MM_DD));
                 })
                         .setDate(Calendar.getInstance())
                         .build();
@@ -88,21 +113,71 @@ public class StationAlarmFragment extends Fragment{
                 tvTank.setText(R.string.all);
                 tvStartTime.setText("");
                 tvEndTime.setText("");
+                mPosition = -1;
                 break;
             //查询
             case R.id.tv_search:
                 String startTime = tvStartTime.getText().toString();
-                if(TextUtils.isEmpty(startTime)){
-                    ToastUtils.showToast(getContext(),R.string.tip_start_time);
+                if (TextUtils.isEmpty(startTime)) {
+                    ToastUtils.showToast(getContext(), R.string.tip_start_time);
                     return;
                 }
                 String endTime = tvEndTime.getText().toString();
-                if(TextUtils.isEmpty(endTime)){
-                    ToastUtils.showToast(getContext(),R.string.tip_end_time);
+                if (TextUtils.isEmpty(endTime)) {
+                    ToastUtils.showToast(getContext(), R.string.tip_end_time);
                     return;
                 }
                 //todo 调用接口显示查询结果
                 break;
+        }
+    }
+
+    private void getTankList() {
+        ApiClient.getService()
+                .getTankList(stationID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<List<TankResponse>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<List<TankResponse>> tankResponseResult) {
+                        pop(tankResponseResult);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void pop(Result<List<TankResponse>> tankResponseResult) {
+        if (tankResponseResult.getCode() == Constant.CODE_SUCCESS) {
+            mTankResponseList = tankResponseResult.getData();
+            if (null == pickerFragment) {
+                pickerFragment = new BottomPickerFragment();
+            }
+            optionArray = new String[mTankResponseList.size() + 1];
+            optionArray[0] = getString(R.string.all);
+            for (int i = 0; i < mTankResponseList.size(); i++) {
+                optionArray[i + 1] = mTankResponseList.get(i).tankName;
+            }
+            pickerFragment.setOptionArray(optionArray);
+            pickerFragment.setSelectedPosition(0);
+            pickerFragment.setOnItemSelectedListener((text, position) -> {
+                tvTank.setText(text);
+                mPosition = position - 1;
+            });
+            pickerFragment.show(getFragmentManager(), "alarm");
         }
     }
 }

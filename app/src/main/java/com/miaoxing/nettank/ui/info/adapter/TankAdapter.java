@@ -44,10 +44,10 @@ public class TankAdapter extends RecyclerView.Adapter<TankAdapter.TankHolder> {
         holder.tvCapacity.setText(context.getString(R.string.capacity)+tank.capacity);
         holder.tvFuelLevel.setText(context.getString(R.string.fuel_level)+tank.fuelLevel);
         holder.tvWaterLevel.setText(context.getString(R.string.water_level)+tank.waterLevel);
-        holder.tvTemperature.setText(context.getString(R.string.temperature)+tank.temperature);
+        //holder.tvTemperature.setText(context.getString(R.string.temperature)+tank.waterVol);
         holder.tvTankName.setText(tank.tankName);
         holder.tvFuelVol.setText(tank.fuelVol+"L");
-        holder.tvFuelName.setText(tank.fuleName);
+        holder.tvFuelName.setText(tank.fuelName);
         double percent = tank.fuelVol*100/tank.capacity;
         BigDecimal bg = new BigDecimal(percent);
         percent = bg.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();

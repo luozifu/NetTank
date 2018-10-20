@@ -14,8 +14,8 @@
 
         <RelativeLayout
             android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:background="@mipmap/ic_launcher">
+            android:layout_height="90dp"
+            android:background="@drawable/ic_tank">
             <LinearLayout
                 android:id="@+id/ll"
                 android:layout_width="wrap_content"

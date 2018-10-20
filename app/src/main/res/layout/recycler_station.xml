@@ -2,30 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="?selectableItemBackground">
+    android:background="?selectableItemBackground"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/primaryText"/>
+        android:background="@color/primaryText" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_m">
+
         <ImageView
             android:id="@+id/iv"
             android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_station"/>
+            android:layout_height="@dimen/title_bar_height"
+            android:src="@drawable/ic_station"
+            android:layout_centerVertical="true"/>
+
         <TextView
             android:id="@+id/tv_station_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_s"
             android:layout_toRightOf="@id/iv"
             android:text="station01"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_station_name"
+            android:text="@string/online_bracket"
             android:layout_marginLeft="@dimen/space_s"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"/>
+            android:textColor="@color/green_app"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/space_s"
+            android:id="@+id/rv_fuel"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_s"
+            android:layout_toRightOf="@id/iv"
+            android:layout_below="@id/tv_station_name">
+
+        </androidx.recyclerview.widget.RecyclerView>
         <!--<TextView
             android:id="@+id/tv_fuel_name"
             android:layout_width="wrap_content"
@@ -53,8 +76,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_right"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_right" />
     </RelativeLayout>
 </LinearLayout>

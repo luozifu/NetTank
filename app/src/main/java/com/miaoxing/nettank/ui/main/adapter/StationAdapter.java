@@ -1,18 +1,20 @@
 package com.miaoxing.nettank.ui.main.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miaoxing.nettank.R;
+import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.model.Station;
 import com.miaoxing.nettank.view.OnItemClickListener;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,8 +43,22 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     @Override
     public void onBindViewHolder(@NonNull StationHolder holder, int position) {
         holder.itemView.setTag(position);
-        String stationName = mStationList.get(position).stationName;
-        holder.tvStationName.setText(stationName);
+        Context context = holder.itemView.getContext();
+        Station station = mStationList.get(position);
+        holder.mTvStationName.setText(station.stationName);
+        if (station.status == Constant.STATUS_ONLINE) {
+            holder.mTvStatus.setText(context.getString(R.string.online_bracket));
+            holder.mTvStatus.setTextColor(context.getResources().getColor(R.color.green_app));
+        } else {
+            holder.mTvStatus.setText(context.getString(R.string.offline_bracket));
+            holder.mTvStatus.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+        }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        holder.mRvFuel.setLayoutManager(layoutManager);
+        holder.mRvFuel.setAdapter(new StationFuelAdapter(station.fuelList));
+
     }
 
     @Override
@@ -56,18 +72,20 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
 
     class StationHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv)
-        ImageView iv;
         @BindView(R.id.tv_station_name)
-        TextView tvStationName;
+        TextView mTvStationName;
+        @BindView(R.id.tv_status)
+        TextView mTvStatus;
+        @BindView(R.id.rv_fuel)
+        RecyclerView mRvFuel;
 
         public StationHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-                if(null != itemClickListener){
+                if (null != itemClickListener) {
                     int position = (int) itemView.getTag();
-                    itemClickListener.onClick(v,position);
+                    itemClickListener.onClick(v, position);
                 }
             });
         }

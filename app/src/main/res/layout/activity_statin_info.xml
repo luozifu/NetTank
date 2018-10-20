@@ -28,6 +28,15 @@
             android:text="@string/inv"
             android:textSize="@dimen/text_size_large"
             android:textColor="@color/white"/>
+        <ImageView
+            android:id="@+id/iv_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_refresh"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/space_m"
+            android:background="?selectableItemBackground"/>
     </RelativeLayout>
     <FrameLayout
         android:id="@+id/content"
@@ -74,7 +83,8 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/delivery"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/ic_water_default"/>
     </RadioGroup>
 
 </LinearLayout>
