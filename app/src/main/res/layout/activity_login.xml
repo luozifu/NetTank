@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:layout_gravity="center_horizontal"
-        android:textSize="@dimen/text_size_default"
+        android:textSize="@dimen/text_size_large"
         android:layout_marginTop="150dp"/>
     <EditText
         android:id="@+id/et_name"
@@ -54,6 +54,7 @@
         android:layout_marginTop="@dimen/space_l"
         android:layout_gravity="end"
         android:layout_marginRight="@dimen/space_l"
+        android:padding="@dimen/space_s"
         android:textColor="@color/tertiaryText"
         android:background="@color/white"/>
 </LinearLayout>
