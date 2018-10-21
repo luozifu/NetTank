@@ -17,6 +17,7 @@ import com.miaoxing.nettank.ui.main.adapter.FuelAdapter;
 import com.miaoxing.nettank.ui.main.adapter.StationAdapter;
 import com.miaoxing.nettank.ui.setting.SettingActivity;
 import com.miaoxing.nettank.util.SPUtils;
+import com.miaoxing.nettank.util.ToastUtils;
 
 import java.util.List;
 
@@ -67,6 +68,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void mock() {
+        showWaitingDialog();
         String userID = (String) SPUtils.get(getContext(), Constant.PREFERENCES_USER_KEY, "");
         ApiClient.getService()
                 .getMain(userID)
@@ -81,6 +83,7 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<MainResponse> mainResponseResult) {
+                        hideWaitingDialog();
                         if (mainResponseResult.getCode() == Constant.CODE_SUCCESS) {
                             fuelList = mainResponseResult.getData().mFuelList;
                             stationList = mainResponseResult.getData().mStationList;
@@ -91,7 +94,7 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        ToastUtils.showToast(getContext(), R.string.tip_net_error);
                     }
 
                     @Override

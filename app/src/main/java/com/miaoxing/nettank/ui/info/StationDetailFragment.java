@@ -85,6 +85,7 @@ public class StationDetailFragment extends Fragment implements SwipeRefreshLayou
         DividerItemDecoration divider = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.s_divider));
         rvTank.addItemDecoration(divider);
+        swipe.setRefreshing(true);
         mock();
     }
 
@@ -146,6 +147,7 @@ public class StationDetailFragment extends Fragment implements SwipeRefreshLayou
     }
 
     public void onClickRefresh() {
+        swipe.setRefreshing(true);
         mock();
     }
 }

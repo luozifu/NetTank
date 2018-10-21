@@ -52,4 +52,6 @@
     <string name="alarm_water_high">高水位报警</string>
     <string name="alarm_fuel_low">低油位报警</string>
     <string name="alarm_fuel_high">高油位报警</string>
+    <string name="tip_net_error">网络异常</string>
+    <string name="tip_result_null">查询结果为空</string>
 </resources>

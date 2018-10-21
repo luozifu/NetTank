@@ -3,7 +3,6 @@ package com.miaoxing.nettank.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,6 +68,7 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 //发起登录，成功则跳转到主界面
+                showWaitingDialog();
                 ApiClient.getService()
                         .login(userName, password)
                         .subscribeOn(Schedulers.io())
@@ -81,6 +81,7 @@ public class LoginActivity extends BaseActivity {
 
                             @Override
                             public void onNext(Result<LoginResponse> result) {
+                                hideWaitingDialog();
                                 if (result.getCode() == Constant.CODE_SUCCESS) {
                                     Intent intent = new Intent(getContext(), MainActivity.class);
                                     startActivity(intent);
@@ -93,7 +94,8 @@ public class LoginActivity extends BaseActivity {
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.e("onError", "error", e);
+                                hideWaitingDialog();
+                                ToastUtils.showToast(getContext(), R.string.tip_net_error);
                             }
 
                             @Override

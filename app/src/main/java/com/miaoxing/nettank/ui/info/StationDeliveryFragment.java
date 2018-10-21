@@ -165,8 +165,11 @@ public class StationDeliveryFragment extends Fragment {
                     public void onNext(Result<List<RecordResponse>> result) {
                         if (result.getCode() == Constant.CODE_SUCCESS) {
                             mRecordResponseList = result.getData();
+                            if(mRecordResponseList.size() == 0 || null ==mRecordResponseList){
+                                ToastUtils.showToast(getContext(), R.string.tip_result_null);
+                            }
                             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                            layoutManager.setOrientation(RecyclerView.VERTICAL);
                             mRvResult.setLayoutManager(layoutManager);
                             mRecordAdapter = new RecordAdapter(mRecordResponseList);
                             mRvResult.setAdapter(mRecordAdapter);
@@ -204,6 +207,7 @@ public class StationDeliveryFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        ToastUtils.showToast(getContext(), R.string.tip_net_error);
                     }
 
                     @Override

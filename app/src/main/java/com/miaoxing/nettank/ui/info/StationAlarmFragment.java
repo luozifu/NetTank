@@ -165,8 +165,11 @@ public class StationAlarmFragment extends Fragment {
                     public void onNext(Result<List<AlarmResponse>> result) {
                         if (result.getCode() == Constant.CODE_SUCCESS) {
                             mAlarmResponseList = result.getData();
+                            if(mAlarmResponseList.size() == 0 || null == mAlarmResponseList){
+                                ToastUtils.showToast(getContext(), R.string.tip_result_null);
+                            }
                             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                            layoutManager.setOrientation(RecyclerView.VERTICAL);
                             mRvResult.setLayoutManager(layoutManager);
                             mAlarmAdapter = new AlarmAdapter(mAlarmResponseList, getContext());
                             mRvResult.setAdapter(mAlarmAdapter);
@@ -175,6 +178,7 @@ public class StationAlarmFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        ToastUtils.showToast(getContext(), R.string.tip_net_error);
                         e.printStackTrace();
                     }
 
@@ -204,6 +208,7 @@ public class StationAlarmFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        ToastUtils.showToast(getContext(), R.string.tip_net_error);
                     }
 
                     @Override
