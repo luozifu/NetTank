@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">智慧油罐</string>
     <string name="user_name">account</string>
@@ -37,4 +36,22 @@
     <string name="total">总容</string>
     <string name="digits">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="tip_account_error">账户或者密码错误</string>
+    <string name="online_bracket">(online)</string>
+    <string name="offline_bracket">(offline)</string>
+    <string name="vol_short">存</string>
+    <string name="capacity_short">总</string>
+    <string name="operator">操作员:</string>
+    <string name="volume">进油量:</string>
+    <string name="add_before">进油前:</string>
+    <string name="add_after">进油后:</string>
+    <string name="alarm_water_float">水浮子无效</string>
+    <string name="alarm_alpenstock">检测不到探棒数据</string>
+    <string name="alarm_low_tmp">低温报警</string>
+    <string name="alarm_high_tmp">高温报警</string>
+    <string name="alarm_water_low">低水位报警</string>
+    <string name="alarm_water_high">高水位报警</string>
+    <string name="alarm_fuel_low">低油位报警</string>
+    <string name="alarm_fuel_high">高油位报警</string>
+    <string name="tip_net_error">网络异常</string>
+    <string name="tip_result_null">查询结果为空</string>
 </resources>

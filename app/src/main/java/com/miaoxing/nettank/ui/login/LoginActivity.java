@@ -13,6 +13,7 @@ import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.net.ApiClient;
 import com.miaoxing.nettank.net.Result;
 import com.miaoxing.nettank.ui.main.MainActivity;
+import com.miaoxing.nettank.util.LanguageUtils;
 import com.miaoxing.nettank.util.SPUtils;
 import com.miaoxing.nettank.util.ToastUtils;
 import com.miaoxing.nettank.view.dialog.BottomPickerFragment;
@@ -119,8 +120,10 @@ public class LoginActivity extends BaseActivity {
                     String temp = optionArray[position];
                     if (!temp.equals(mLanguage)) {
                         mLanguage = temp;
-                        SPUtils.put(getContext(),Constant.PREFERENCES_LANGUAGE_KEY,mLanguage);
-                        recreate();
+                        LanguageUtils.changeLocale(getContext(),mLanguage);
+                        Intent intent = new Intent(this,LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     }
                 });
                 mPickerFragment.show(getSupportFragmentManager(), TAG);

@@ -3,9 +3,9 @@ package com.miaoxing.nettank.util;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
-import android.os.LocaleList;
 import android.util.DisplayMetrics;
+
+import com.miaoxing.nettank.constant.Constant;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -15,7 +15,7 @@ import java.util.Locale;
  * @date : 2018/10/18
  */
 
-public class ConfigurationUtils {
+public class LanguageUtils {
 
     public static HashMap<String, Locale> sLanguages = new HashMap<String, Locale>(2) {
         {
@@ -24,16 +24,22 @@ public class ConfigurationUtils {
         }
     };
 
-    public static Context changeLocale(Context context, String s) {
-
+    public static void changeLocale(Context context, String s) {
         Resources resources = context.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
-        Locale locale = ConfigurationUtils.sLanguages.get(s);
+        Locale locale = LanguageUtils.sLanguages.get(s);
         config.setLocale(locale);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            config.setLocales(new LocaleList(locale));
-        }
+        resources.updateConfiguration(config, dm);
+        SPUtils.put(context, Constant.PREFERENCES_LANGUAGE_KEY, s);
+    }
+
+    public static Context createLocale(Context context,String s){
+        Resources resources = context.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        Locale locale = LanguageUtils.sLanguages.get(s);
+        config.setLocale(locale);
         return context.createConfigurationContext(config);
     }
 

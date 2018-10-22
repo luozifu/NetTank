@@ -2,6 +2,9 @@ package com.miaoxing.nettank.base;
 
 import android.content.Context;
 
+import com.miaoxing.nettank.constant.Constant;
+import com.miaoxing.nettank.util.LanguageUtils;
+import com.miaoxing.nettank.util.SPUtils;
 import com.miaoxing.nettank.view.WaitingDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +35,12 @@ public class BaseActivity extends AppCompatActivity {
     protected void onPause() {
         hideWaitingDialog();
         super.onPause();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String language = (String) SPUtils.get(newBase, Constant.PREFERENCES_LANGUAGE_KEY, "简体中文");
+        super.attachBaseContext(LanguageUtils.createLocale(newBase, language));
     }
 
     public Context getContext() {
