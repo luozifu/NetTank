@@ -33,7 +33,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmHolder>
         mAlarmResponseList = alarmResponseList;
         mMap = new HashMap<>();
         mMap.put(Constant.ALARM_WATER_FLOAT, context.getString(R.string.alarm_water_float));
-        mMap.put(Constant.ALARM_ALPENSTOCK, context.getString(R.string.alarm_alpenstock));
+        mMap.put(Constant.ALARM_ALPENSTOCK, context.getString(R.string.alarm_probe));
         mMap.put(Constant.ALARM_LOW_TMP, context.getString(R.string.alarm_low_tmp));
         mMap.put(Constant.ALARM_HIGH_TMP, context.getString(R.string.alarm_high_tmp));
         mMap.put(Constant.ALARM_WATER_LOW, context.getString(R.string.alarm_water_low));

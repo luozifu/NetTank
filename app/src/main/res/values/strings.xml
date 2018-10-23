@@ -45,7 +45,7 @@
     <string name="add_before">进油前:</string>
     <string name="add_after">进油后:</string>
     <string name="alarm_water_float">水浮子无效</string>
-    <string name="alarm_alpenstock">检测不到探棒数据</string>
+    <string name="alarm_probe">检测不到探棒数据</string>
     <string name="alarm_low_tmp">低温报警</string>
     <string name="alarm_high_tmp">高温报警</string>
     <string name="alarm_water_low">低水位报警</string>
