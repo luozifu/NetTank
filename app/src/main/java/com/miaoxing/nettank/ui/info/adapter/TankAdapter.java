@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miaoxing.nettank.R;
@@ -41,17 +42,18 @@ public class TankAdapter extends RecyclerView.Adapter<TankAdapter.TankHolder> {
     public void onBindViewHolder(@NonNull TankHolder holder, int position) {
         Tank tank = mTankList.get(position);
         Context context = holder.itemView.getContext();
-        holder.tvCapacity.setText(context.getString(R.string.capacity)+tank.capacity);
-        holder.tvFuelLevel.setText(context.getString(R.string.fuel_level)+tank.fuelLevel);
-        holder.tvWaterLevel.setText(context.getString(R.string.water_level)+tank.waterLevel);
+        holder.tvCapacity.setText(context.getString(R.string.capacity) + tank.capacity);
+        holder.tvFuelLevel.setText(context.getString(R.string.fuel_level) + tank.fuelLevel);
+        holder.tvWaterLevel.setText(context.getString(R.string.water_level) + tank.waterLevel);
         //holder.tvTemperature.setText(context.getString(R.string.temperature)+tank.waterVol);
         holder.tvTankName.setText(tank.tankName);
-        holder.tvFuelVol.setText(tank.fuelVol+"L");
+        holder.tvFuelVol.setText(tank.fuelVol + "L");
         holder.tvFuelName.setText(tank.fuelName);
-        double percent = tank.fuelVol*100/tank.capacity;
+        double percent = tank.fuelVol * 100 / tank.capacity;
         BigDecimal bg = new BigDecimal(percent);
         percent = bg.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
-        holder.tvPercent.setText(percent+"%");
+        holder.tvPercent.setText(percent + "%");
+        holder.pbTank.setProgress((int) percent);
     }
 
     @Override
@@ -77,10 +79,12 @@ public class TankAdapter extends RecyclerView.Adapter<TankAdapter.TankHolder> {
         TextView tvWaterLevel;
         @BindView(R.id.tv_temperature)
         TextView tvTemperature;
+        @BindView(R.id.pb_tank)
+        ProgressBar pbTank;
 
         public TankHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
