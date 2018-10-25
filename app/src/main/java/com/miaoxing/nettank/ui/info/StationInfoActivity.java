@@ -91,15 +91,15 @@ public class StationInfoActivity extends BaseActivity {
 
     private void initRadioBtn() {
         int px = ScreenUtils.dp2px(30);
-        Drawable drawable1 = getResources().getDrawable(R.drawable.ic_tank_pressed);
+        Drawable drawable1 = getResources().getDrawable(R.drawable.sl_tank);
         drawable1.setBounds(0, 0, px, px);
         rbDetail.setCompoundDrawables(null, drawable1, null, null);
 
-        Drawable drawable2 = getResources().getDrawable(R.drawable.ic_alarm_default);
+        Drawable drawable2 = getResources().getDrawable(R.drawable.sl_alarm);
         drawable2.setBounds(0, 0, px, px);
         rbAlarm.setCompoundDrawables(null, drawable2, null, null);
 
-        Drawable drawable3 = getResources().getDrawable(R.drawable.ic_water_default);
+        Drawable drawable3 = getResources().getDrawable(R.drawable.sl_fuel);
         drawable3.setBounds(0, 0, px, px);
         rbRecord.setCompoundDrawables(null, drawable3, null, null);
     }

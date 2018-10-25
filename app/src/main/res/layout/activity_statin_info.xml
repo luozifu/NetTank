@@ -60,7 +60,7 @@
             android:gravity="center"
             android:text="@string/inv"
             android:textColor="@color/white"
-            android:drawableTop="@drawable/ic_tank_pressed"/>
+            android:drawableTop="@drawable/sl_tank" />
         <RadioButton
             android:background="@drawable/sl_tab"
             android:checked="false"
@@ -72,7 +72,7 @@
             android:gravity="center"
             android:text="@string/alarm"
             android:textColor="@color/white"
-            android:drawableTop="@drawable/ic_alarm_default"/>
+            android:drawableTop="@drawable/sl_alarm"/>
         <RadioButton
             android:background="@drawable/sl_tab"
             android:checked="false"
@@ -84,7 +84,7 @@
             android:gravity="center"
             android:text="@string/delivery"
             android:textColor="@color/white"
-            android:drawableTop="@drawable/ic_water_default"/>
+            android:drawableTop="@drawable/sl_fuel"/>
     </RadioGroup>
 
 </LinearLayout>
