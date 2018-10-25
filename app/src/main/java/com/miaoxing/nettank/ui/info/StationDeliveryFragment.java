@@ -150,7 +150,7 @@ public class StationDeliveryFragment extends Fragment {
         map.put("StationID", stationID);
         map.put("start_time", startTime);
         map.put("end_time", endTime);
-        map.put("page", page);
+        //map.put("page", page);
         ApiClient.getService()
                 .getRecordList(map)
                 .subscribeOn(Schedulers.io())
