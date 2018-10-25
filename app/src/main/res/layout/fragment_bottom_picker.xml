@@ -39,7 +39,7 @@
             android:paddingStart="@dimen/space_m"
             android:paddingEnd="@dimen/space_m"
             android:text="确定"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorAccent"/>
 
     </RelativeLayout>
 

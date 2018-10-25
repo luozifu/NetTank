@@ -1,5 +1,6 @@
 package com.miaoxing.nettank.ui.info.adapter;
 
+import android.animation.ValueAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,16 @@ public class HistogramAdapter extends RecyclerView.Adapter<HistogramAdapter.Hist
 
         int height = ScreenUtils.dp2px(150);
         height = (int) (height * fuel.fuelVol / fuel.capacity);
+        ValueAnimator animator = ValueAnimator.ofInt(0,height);
+        animator.setDuration(500);
+        animator.setStartDelay(200);
+        animator.setRepeatCount(0);
+        animator.start();
         ViewGroup.LayoutParams layoutParams = holder.tvFuel.getLayoutParams();
-        layoutParams.height = height;
-        holder.tvFuel.setLayoutParams(layoutParams);
+        animator.addUpdateListener(animation -> {
+            layoutParams.height = (int) animation.getAnimatedValue();
+            holder.tvFuel.setLayoutParams(layoutParams);
+        });
     }
 
     @Override

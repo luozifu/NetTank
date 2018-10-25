@@ -21,11 +21,13 @@
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/space_l"
             android:paddingRight="@dimen/space_l"
-            android:layout_marginTop="@dimen/space_m">
+            android:layout_marginTop="@dimen/space_m"
+            android:background="@color/white">
 
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/space_m"
         android:id="@+id/rv_tank"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

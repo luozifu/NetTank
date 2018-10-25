@@ -1,10 +1,15 @@
 package com.miaoxing.nettank.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.miaoxing.nettank.R;
@@ -12,11 +17,14 @@ import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.net.ApiClient;
 import com.miaoxing.nettank.net.Result;
 import com.miaoxing.nettank.ui.info.response.AlarmResponse;
+import com.miaoxing.nettank.ui.main.MainActivity;
 import com.miaoxing.nettank.util.DateTimeUtils;
 import com.miaoxing.nettank.util.SPUtils;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -42,6 +50,8 @@ public class PullService extends Service {
 
     private int count = 1;
 
+    private Map<Integer, String> mMap;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -52,6 +62,15 @@ public class PullService extends Service {
     public void onCreate() {
         super.onCreate();
         userID = (String) SPUtils.get(this,Constant.PREFERENCES_USER_KEY,"");
+        mMap = new HashMap<>();
+        mMap.put(Constant.ALARM_WATER_FLOAT, getResources().getString(R.string.alarm_water_float));
+        mMap.put(Constant.ALARM_ALPENSTOCK, getResources().getString(R.string.alarm_probe));
+        mMap.put(Constant.ALARM_LOW_TMP, getResources().getString(R.string.alarm_low_tmp));
+        mMap.put(Constant.ALARM_HIGH_TMP, getResources().getString(R.string.alarm_high_tmp));
+        mMap.put(Constant.ALARM_WATER_LOW, getResources().getString(R.string.alarm_water_low));
+        mMap.put(Constant.ALARM_WATER_HIGH, getResources().getString(R.string.alarm_water_high));
+        mMap.put(Constant.ALARM_FUEL_LOW, getResources().getString(R.string.alarm_fuel_low));
+        mMap.put(Constant.ALARM_FUEL_HIGH, getResources().getString(R.string.alarm_fuel_high));
         initManager();
     }
 
@@ -59,6 +78,15 @@ public class PullService extends Service {
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(this,getPackageName());
         remoteViews = new RemoteViews(getPackageName(), R.layout.notify);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(getPackageName(), getPackageName(), importance);
+            manager.createNotificationChannel(channel);
+        }
+        //创建一个pendingIntent对象用于点击notification之后跳转
+        PendingIntent intent = PendingIntent.getActivity(this,0,
+                new Intent(this,MainActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(intent);
         builder.setStyle(new NotificationCompat.DecoratedCustomViewStyle());
         builder.setSmallIcon(R.drawable.vector_drawable_logo);
         builder.setAutoCancel(true);
@@ -80,7 +108,11 @@ public class PullService extends Service {
         }
         remoteViews.setTextViewText(R.id.tv_station_notify,alarm.stationName);
         remoteViews.setTextViewText(R.id.tv_tank_notify,alarm.tankName);
-        remoteViews.setTextViewText(R.id.tv_alarm_notify,alarm.alarmInfo+"");
+        String alarmInfo = mMap.get(alarm.alarmInfo);
+        if(TextUtils.isEmpty(alarmInfo)){
+            alarmInfo = "无效报警";
+        }
+        remoteViews.setTextViewText(R.id.tv_alarm_notify,alarmInfo);
         remoteViews.setTextViewText(R.id.tv_alarm_time_notify,alarm.alarmTime);
         builder.setCustomContentView(remoteViews);
         manager.notify(++count,builder.build());
@@ -100,6 +132,7 @@ public class PullService extends Service {
 
                     @Override
                     public void onNext(Result<List<AlarmResponse>> listResult) {
+                        Log.e("pull","1");
                         if(listResult.getCode() != Constant.CODE_SUCCESS){
                             return;
                         }
