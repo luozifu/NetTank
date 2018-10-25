@@ -8,6 +8,8 @@ import android.widget.Switch;
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.base.BaseActivity;
 import com.miaoxing.nettank.constant.Constant;
+import com.miaoxing.nettank.service.PullService;
+import com.miaoxing.nettank.service.PullUtils;
 import com.miaoxing.nettank.ui.login.LoginActivity;
 import com.miaoxing.nettank.util.SPUtils;
 
@@ -31,10 +33,11 @@ public class SettingActivity extends BaseActivity {
         sw.setOnCheckedChangeListener((buttonView, isChecked1) -> {
             //todo 开启或者关闭推送
             if(isChecked1){
-
+                PullUtils.startPullService(this,30,PullService.class,PullService.ACTION);
             }else {
-
+                PullUtils.stopPullService(this,PullService.class,PullService.ACTION);
             }
+            SPUtils.put(this,Constant.PREFERENCES_ALARM_KEY,isChecked);
         });
     }
 

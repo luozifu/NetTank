@@ -1,5 +1,6 @@
 package com.miaoxing.nettank.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,6 +36,11 @@ public class DateTimeUtils {
     public static String formatDateTime(Date date, String formater) {
         SimpleDateFormat sdf = new SimpleDateFormat(formater);
         return sdf.format(date);
+    }
+
+    public static long getTime(String time,String formater) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(formater);
+        return sdf.parse(time).getTime();
     }
 
 }

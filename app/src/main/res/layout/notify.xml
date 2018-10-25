@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/space_s"
+    android:paddingBottom="@dimen/space_s">
+    <ImageView
+        android:id="@+id/iv_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/vector_drawable_logo"/>
+    <TextView
+        android:id="@+id/tv_station_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gaoxiang Road Station"
+        android:layout_toRightOf="@id/iv_notify"
+        android:layout_marginLeft="@dimen/space_m"/>
+    <TextView
+        android:id="@+id/tv_tank_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1#油罐"
+        android:layout_toRightOf="@id/tv_station_notify"
+        android:layout_marginLeft="@dimen/space_s"/>
+    <TextView
+        android:id="@+id/tv_alarm_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="水浮子无效"
+        android:layout_below="@id/tv_station_notify"
+        android:layout_toRightOf="@id/iv_notify"
+        android:layout_marginLeft="@dimen/space_m"
+        android:layout_marginTop="@dimen/space_s"/>
+    <TextView
+        android:id="@+id/tv_alarm_time_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2018-09-05 20:55:49"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_alarm_notify"
+        android:textSize="@dimen/text_size_small"
+        android:layout_marginRight="@dimen/space_m"/>
+</RelativeLayout>

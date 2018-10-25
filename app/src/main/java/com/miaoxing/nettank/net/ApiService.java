@@ -91,5 +91,5 @@ public interface ApiService {
      */
     @POST("Api/tankinfoalarm")
     @FormUrlEncoded
-    Observable pullAlarm(@Field("UserID") String userID);
+    Observable<Result<List<AlarmResponse>>> pullAlarm(@Field("UserID") String userID);
 }

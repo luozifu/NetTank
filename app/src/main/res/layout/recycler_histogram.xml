@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/space_m"
     android:paddingRight="@dimen/space_m">
@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:text="2.5"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="@dimen/space_s"/>
+        android:paddingBottom="@dimen/space_s"
+        android:textSize="@dimen/text_size_small"/>
     <RelativeLayout
         android:layout_centerHorizontal="true"
         android:id="@+id/rl_histogram"
@@ -33,7 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="1.1"/>
+        android:text="1.1"
+        android:textSize="@dimen/text_size_small"/>
     <TextView
         android:id="@+id/tv_fuel_name"
         android:layout_width="wrap_content"
@@ -41,5 +43,6 @@
         android:text="90#"
         android:layout_below="@id/rl_histogram"
         android:layout_centerHorizontal="true"
-        android:paddingTop="@dimen/space_s"/>
+        android:paddingTop="@dimen/space_s"
+        android:textSize="@dimen/text_size_small"/>
 </RelativeLayout>

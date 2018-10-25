@@ -12,6 +12,8 @@ import com.miaoxing.nettank.model.Station;
 import com.miaoxing.nettank.model.StationStat;
 import com.miaoxing.nettank.net.ApiClient;
 import com.miaoxing.nettank.net.Result;
+import com.miaoxing.nettank.service.PullService;
+import com.miaoxing.nettank.service.PullUtils;
 import com.miaoxing.nettank.ui.info.StationInfoActivity;
 import com.miaoxing.nettank.ui.main.adapter.FuelAdapter;
 import com.miaoxing.nettank.ui.main.adapter.StationAdapter;
@@ -64,6 +66,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        boolean isChecked = (boolean) SPUtils.get(this,Constant.PREFERENCES_ALARM_KEY,true);
+        if(isChecked) {
+            PullUtils.startPullService(this, 30, PullService.class, PullService.ACTION);
+        }
         mock();
     }
 
@@ -131,5 +137,11 @@ public class MainActivity extends BaseActivity {
         //跳转到设置界面
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PullUtils.stopPullService(this,PullService.class,PullService.ACTION);
     }
 }

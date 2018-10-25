@@ -45,7 +45,7 @@ public class TankAdapter extends RecyclerView.Adapter<TankAdapter.TankHolder> {
         holder.tvCapacity.setText(context.getString(R.string.capacity) + tank.capacity);
         holder.tvFuelLevel.setText(context.getString(R.string.fuel_level) + tank.fuelLevel);
         holder.tvWaterLevel.setText(context.getString(R.string.water_level) + tank.waterLevel);
-        //holder.tvTemperature.setText(context.getString(R.string.temperature)+tank.waterVol);
+        holder.tvTemperature.setText(context.getString(R.string.temperature)+tank.temperature);
         holder.tvTankName.setText(tank.tankName);
         holder.tvFuelVol.setText(tank.fuelVol + "L");
         holder.tvFuelName.setText(tank.fuelName);

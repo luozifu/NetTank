@@ -43,6 +43,7 @@ public class Tank implements Serializable{
     /**
      * 温度
      */
+    @SerializedName("Temperature")
     public double temperature;
     /**
      * 油浮子高度
