@@ -56,5 +56,5 @@
         android:layout_marginRight="@dimen/space_l"
         android:padding="@dimen/space_s"
         android:textColor="@color/tertiaryText"
-        android:background="@color/white"/>
+        android:background="?selectableItemBackground"/>
 </LinearLayout>

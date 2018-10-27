@@ -15,7 +15,7 @@ public class ApiClient {
 
     public static ApiService getService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://youguan.mx5918.com/")
+                .baseUrl("http://tank.fuel-dispenser.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
