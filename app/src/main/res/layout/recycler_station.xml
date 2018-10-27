@@ -39,7 +39,7 @@
             android:text="@string/online_bracket"
             android:layout_marginLeft="@dimen/space_s"
             android:textColor="@color/green_app"/>
-        <androidx.recyclerview.widget.RecyclerView
+        <com.miaoxing.nettank.view.RecyclerViewNotTouch
             android:layout_marginTop="@dimen/space_s"
             android:id="@+id/rv_fuel"
             android:layout_width="220dp"
@@ -48,7 +48,7 @@
             android:layout_toRightOf="@id/iv"
             android:layout_below="@id/tv_station_name">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        </com.miaoxing.nettank.view.RecyclerViewNotTouch>
         <!--<TextView
             android:id="@+id/tv_fuel_name"
             android:layout_width="wrap_content"
