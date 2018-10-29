@@ -67,4 +67,12 @@ public class Constant {
      * 高油位
      */
     public static final int ALARM_FUEL_HIGH = 8;
+    /**
+     * 正常列表项
+     */
+    public static final int ITEM_NORMAL = 9;
+    /**
+     * 底部提示列表项
+     */
+    public static final int ITEM_FOOTER = 10;
 }

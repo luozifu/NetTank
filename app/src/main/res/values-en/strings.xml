@@ -54,4 +54,5 @@
     <string name="alarm_fuel_high">High Oil Level</string>
     <string name="tip_net_error">Network Error</string>
     <string name="tip_result_null">No Record</string>
+    <string name="loading">Loading...</string>
 </resources>
