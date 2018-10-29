@@ -5,12 +5,12 @@
 
     <TextView
         android:id="@+id/tv_fuel_name"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:text="92#"/>
 
     <TextView
-        android:layout_centerInParent="true"
+        android:layout_toRightOf="@id/tv_fuel_name"
         android:id="@+id/tv_fuel_vol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:layout_marginLeft="@dimen/space_m"/>
 
     <TextView
-        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/tv_fuel_vol"
         android:id="@+id/tv_capacity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

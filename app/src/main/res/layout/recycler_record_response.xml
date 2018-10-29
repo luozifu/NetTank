@@ -44,11 +44,11 @@
         android:text="@string/add_after"
         android:layout_alignBaseline="@id/tv_operator"/>
     <TextView
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignBaseline="@id/tv_operator"
         android:text="2018-09-07 20:57:41"
         android:textSize="@dimen/text_size_small"/>
     <TextView
