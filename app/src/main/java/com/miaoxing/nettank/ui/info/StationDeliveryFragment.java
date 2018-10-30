@@ -179,10 +179,9 @@ public class StationDeliveryFragment extends Fragment implements XRecyclerView.L
                         }
                         if (page == 1) {
                             mRecordResponseList = result.getData();
+                            initRecycler();
                             if (mRecordResponseList.size() == 0) {
                                 ToastUtils.showToast(getContext(), R.string.tip_result_null);
-                            } else {
-                                initRecycler();
                             }
                         } else {
                             if (result.getData().size() == 0) {
@@ -198,6 +197,7 @@ public class StationDeliveryFragment extends Fragment implements XRecyclerView.L
 
                     @Override
                     public void onError(Throwable e) {
+                        ToastUtils.showToast(getContext(), R.string.tip_net_error);
                         e.printStackTrace();
                     }
 

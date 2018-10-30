@@ -16,7 +16,6 @@ import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.net.ApiClient;
 import com.miaoxing.nettank.net.Result;
 import com.miaoxing.nettank.ui.info.adapter.AlarmAdapter;
-import com.miaoxing.nettank.ui.info.adapter.RecordAdapter;
 import com.miaoxing.nettank.ui.info.response.AlarmResponse;
 import com.miaoxing.nettank.ui.info.response.TankResponse;
 import com.miaoxing.nettank.util.DateTimeUtils;
@@ -148,6 +147,12 @@ public class StationAlarmFragment extends Fragment implements XRecyclerView.Load
         }
     }
 
+    /**
+     * 获取记录
+     *
+     * @param startTime
+     * @param endTime
+     */
     private void getRecords(String startTime, String endTime) {
         Map<String, Object> map = new HashMap<>();
         if (mPosition != -1) {
@@ -174,10 +179,9 @@ public class StationAlarmFragment extends Fragment implements XRecyclerView.Load
                         }
                         if (page == 1) {
                             mAlarmResponseList = result.getData();
+                            initRecycler();
                             if (mAlarmResponseList.size() == 0) {
                                 ToastUtils.showToast(getContext(), R.string.tip_result_null);
-                            } else {
-                                initRecycler();
                             }
                         } else {
                             if (result.getData().size() == 0) {
@@ -221,6 +225,9 @@ public class StationAlarmFragment extends Fragment implements XRecyclerView.Load
         mRvResult.setAdapter(mAlarmAdapter);
     }
 
+    /**
+     * 获取油罐列表
+     */
     private void getTankList() {
         ApiClient.getService()
                 .getTankList(stationID)
@@ -250,6 +257,11 @@ public class StationAlarmFragment extends Fragment implements XRecyclerView.Load
                 });
     }
 
+    /**
+     * 弹出油罐列表
+     *
+     * @param tankResponseResult
+     */
     private void pop(Result<List<TankResponse>> tankResponseResult) {
         if (tankResponseResult.getCode() == Constant.CODE_SUCCESS) {
             mTankResponseList = tankResponseResult.getData();
