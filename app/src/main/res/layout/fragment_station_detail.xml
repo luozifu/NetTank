@@ -15,7 +15,7 @@
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="200dp">
-        <androidx.recyclerview.widget.RecyclerView
+        <!--<androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_histogram"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,7 +24,17 @@
             android:layout_marginTop="@dimen/space_m"
             android:background="@color/white">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>-->
+        <com.github.mikephil.charting.charts.CombinedChart
+            android:id="@+id/rv_histogram"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/space_l"
+            android:paddingRight="@dimen/space_l"
+            android:layout_marginTop="@dimen/space_m"
+            android:background="@color/white">
+
+        </com.github.mikephil.charting.charts.CombinedChart>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="@dimen/space_m"
@@ -34,5 +44,4 @@
         android:padding="@dimen/space_m">
 
     </androidx.recyclerview.widget.RecyclerView>
-
 </LinearLayout>

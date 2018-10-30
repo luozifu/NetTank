@@ -7,15 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.model.Fuel;
 import com.miaoxing.nettank.model.Tank;
 import com.miaoxing.nettank.net.ApiClient;
 import com.miaoxing.nettank.net.Result;
+import com.miaoxing.nettank.ui.info.adapter.CombinedChartManager;
 import com.miaoxing.nettank.ui.info.adapter.HistogramAdapter;
-import com.miaoxing.nettank.ui.info.response.StationInfoResponse;
 import com.miaoxing.nettank.ui.info.adapter.TankAdapter;
+import com.miaoxing.nettank.ui.info.response.StationInfoResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ public class StationDetailFragment extends Fragment implements SwipeRefreshLayou
     @BindView(R.id.tv_collect_time)
     TextView tvCollectTime;
     @BindView(R.id.rv_histogram)
-    RecyclerView rvHistogram;
+    CombinedChart rvHistogram;
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
     @BindView(R.id.rv_tank)
@@ -90,11 +92,41 @@ public class StationDetailFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void initView() {
-        LinearLayoutManager histogramManager = new LinearLayoutManager(getContext());
+        /*LinearLayoutManager histogramManager = new LinearLayoutManager(getContext());
         histogramManager.setOrientation(RecyclerView.HORIZONTAL);
         rvHistogram.setLayoutManager(histogramManager);
         histogramAdapter = new HistogramAdapter(fuelList);
-        rvHistogram.setAdapter(histogramAdapter);
+        rvHistogram.setAdapter(histogramAdapter);*/
+        //x轴数据
+        List<String> xData = new ArrayList<>();
+        List<List<Float>> yBarDatas = new ArrayList<>();
+        for (int i = 0; i < fuelList.size(); i++) {
+            xData.add(fuelList.get(i).fuelName);
+        }
+        //2种直方图
+        for (int i = 0; i < 2; i++) {
+            //y轴数
+            List<Float> yData = new ArrayList<>();
+            for (int j = 0; j < fuelList.size(); j++) {
+                if(i == 0) {
+                    yData.add((float) fuelList.get(j).capacity);
+                }else {
+                    yData.add((float) fuelList.get(j).fuelVol);
+                }
+            }
+            yBarDatas.add(yData);
+        }
+        //名字集合
+        List<String> barNames = new ArrayList<>();
+        barNames.add(getString(R.string.total));
+        barNames.add(getString(R.string.fuel_vol));
+        //颜色集合
+        List<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.gray_light));
+        colors.add(getResources().getColor(R.color.green_app));
+        CombinedChartManager manager = new CombinedChartManager(rvHistogram);
+        manager.showCombinedChart(xData,yBarDatas,barNames,colors);
+
 
         LinearLayoutManager tankManager = new LinearLayoutManager(getContext());
         tankManager.setOrientation(RecyclerView.VERTICAL);

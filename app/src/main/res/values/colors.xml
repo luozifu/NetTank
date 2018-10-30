@@ -13,4 +13,5 @@
     <color name="pressed_light">#f3f3f3</color>
     <color name="black">#000000</color>
     <color name="green_app">#4DBA79</color>
+    <color name="gray_light">#EEEEEE</color>
 </resources>
