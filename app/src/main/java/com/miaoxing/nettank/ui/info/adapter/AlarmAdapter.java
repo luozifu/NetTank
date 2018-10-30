@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * @date : 2018/10/20
  */
 
-public class AlarmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmHolder> {
 
     private List<AlarmResponse> mAlarmResponseList;
     private Map<Integer, String> mMap;
@@ -44,43 +44,24 @@ public class AlarmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == Constant.ITEM_NORMAL) {
+    public AlarmAdapter.AlarmHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.recycler_alarm_response, parent, false);
             return new AlarmHolder(view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.recycler_footer, parent, false);
-            return new FooterHolder(view);
-        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof AlarmHolder) {
-            AlarmHolder alarmHolder = (AlarmHolder) holder;
-            alarmHolder.mTvFuelName.setText(mAlarmResponseList.get(position).fuelName);
-            alarmHolder.mTvTankName.setText(mAlarmResponseList.get(position).tankName);
-            alarmHolder.mTvTime.setText(mAlarmResponseList.get(position).alarmTime);
-            alarmHolder.mTvAlarm.setText(mMap.get(mAlarmResponseList.get(position).alarmInfo));
-        } else {
-
-        }
+    public void onBindViewHolder(@NonNull AlarmAdapter.AlarmHolder holder, int position) {
+        holder.mNum.setText((position+1)+"");
+        holder.mTvFuelName.setText(mAlarmResponseList.get(position).fuelName);
+        holder.mTvTankName.setText(mAlarmResponseList.get(position).tankName);
+        holder.mTvTime.setText(mAlarmResponseList.get(position).alarmTime);
+        holder.mTvAlarm.setText(mMap.get(mAlarmResponseList.get(position).alarmInfo));
     }
 
     @Override
     public int getItemCount() {
-        return mAlarmResponseList.size() + 1;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return Constant.ITEM_FOOTER;
-        } else {
-            return Constant.ITEM_NORMAL;
-        }
+        return mAlarmResponseList.size();
     }
 
     class AlarmHolder extends RecyclerView.ViewHolder {
@@ -93,18 +74,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView mTvAlarm;
         @BindView(R.id.tv_time)
         TextView mTvTime;
+        @BindView(R.id.tv_num)
+        TextView mNum;
 
         public AlarmHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    class FooterHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_tip_load)
-        TextView tvTipLoad;
-
-        public FooterHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

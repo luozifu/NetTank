@@ -9,11 +9,14 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.net.ApiClient;
 import com.miaoxing.nettank.net.Result;
 import com.miaoxing.nettank.ui.info.adapter.AlarmAdapter;
+import com.miaoxing.nettank.ui.info.adapter.RecordAdapter;
 import com.miaoxing.nettank.ui.info.response.AlarmResponse;
 import com.miaoxing.nettank.ui.info.response.TankResponse;
 import com.miaoxing.nettank.util.DateTimeUtils;
@@ -39,7 +42,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class StationAlarmFragment extends Fragment {
+public class StationAlarmFragment extends Fragment implements XRecyclerView.LoadingListener {
     @BindView(R.id.tv_tank)
     TextView tvTank;
     @BindView(R.id.tv_start_time)
@@ -47,7 +50,7 @@ public class StationAlarmFragment extends Fragment {
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
     @BindView(R.id.rv_result)
-    RecyclerView mRvResult;
+    XRecyclerView mRvResult;
 
     TimePickerView startPicker;
     TimePickerView endPicker;
@@ -56,9 +59,11 @@ public class StationAlarmFragment extends Fragment {
     private BottomPickerFragment pickerFragment;
     private String[] optionArray;
     private int mPosition = -1;
-    private int page = 1;
+    private int page;
     private List<AlarmResponse> mAlarmResponseList;
     private AlarmAdapter mAlarmAdapter;
+    private String startTime;
+    private String endTime;
 
     public StationAlarmFragment() {
 
@@ -125,19 +130,20 @@ public class StationAlarmFragment extends Fragment {
                 break;
             //查询
             case R.id.tv_search:
-                String startTime = tvStartTime.getText().toString();
+                startTime = tvStartTime.getText().toString();
                 if (TextUtils.isEmpty(startTime)) {
                     ToastUtils.showToast(getContext(), R.string.tip_start_time);
                     return;
                 }
-                String endTime = tvEndTime.getText().toString();
+                endTime = tvEndTime.getText().toString();
                 if (TextUtils.isEmpty(endTime)) {
                     ToastUtils.showToast(getContext(), R.string.tip_end_time);
                     return;
                 }
                 mAlarmResponseList = new ArrayList<>();
+                page = 1;
+                mRvResult.setNoMore(false);
                 getRecords(startTime, endTime);
-
                 break;
         }
     }
@@ -150,7 +156,7 @@ public class StationAlarmFragment extends Fragment {
         map.put("StationID", stationID);
         map.put("start_time", startTime);
         map.put("end_time", endTime);
-        //map.put("page", page);
+        map.put("page", page);
         ApiClient.getService()
                 .getAlarmList(map)
                 .subscribeOn(Schedulers.io())
@@ -163,17 +169,26 @@ public class StationAlarmFragment extends Fragment {
 
                     @Override
                     public void onNext(Result<List<AlarmResponse>> result) {
-                        if (result.getCode() == Constant.CODE_SUCCESS) {
-                            mAlarmResponseList = result.getData();
-                            if(mAlarmResponseList.size() == 0 || null == mAlarmResponseList){
-                                ToastUtils.showToast(getContext(), R.string.tip_result_null);
-                            }
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                            layoutManager.setOrientation(RecyclerView.VERTICAL);
-                            mRvResult.setLayoutManager(layoutManager);
-                            mAlarmAdapter = new AlarmAdapter(mAlarmResponseList, getContext());
-                            mRvResult.setAdapter(mAlarmAdapter);
+                        if (result.getCode() != Constant.CODE_SUCCESS) {
+                            return;
                         }
+                        if (page == 1) {
+                            mAlarmResponseList = result.getData();
+                            if (mAlarmResponseList.size() == 0) {
+                                ToastUtils.showToast(getContext(), R.string.tip_result_null);
+                            } else {
+                                initRecycler();
+                            }
+                        } else {
+                            if (result.getData().size() == 0) {
+                                mRvResult.setNoMore(true);
+                            } else {
+                                mAlarmResponseList.addAll(result.getData());
+                                mRvResult.loadMoreComplete();
+                            }
+                            mAlarmAdapter.notifyDataSetChanged();
+                        }
+                        ++page;
                     }
 
                     @Override
@@ -187,6 +202,23 @@ public class StationAlarmFragment extends Fragment {
 
                     }
                 });
+    }
+
+    /**
+     * 初始化RecyclerView
+     */
+    private void initRecycler() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        mRvResult.setLayoutManager(layoutManager);
+        mRvResult.setPullRefreshEnabled(false);
+        mRvResult.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
+        mRvResult.getDefaultFootView().setLoadingHint(getString(R.string.loading));
+        mRvResult.getDefaultFootView().setNoMoreHint(getString(R.string.load_no_more));
+        mRvResult.setLoadingListener(this);
+
+        mAlarmAdapter = new AlarmAdapter(mAlarmResponseList,getContext());
+        mRvResult.setAdapter(mAlarmAdapter);
     }
 
     private void getTankList() {
@@ -237,5 +269,15 @@ public class StationAlarmFragment extends Fragment {
             });
             pickerFragment.show(getFragmentManager(), "alarm");
         }
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+        getRecords(startTime, endTime);
     }
 }

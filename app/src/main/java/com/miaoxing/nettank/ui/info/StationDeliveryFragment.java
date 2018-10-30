@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.miaoxing.nettank.R;
 import com.miaoxing.nettank.constant.Constant;
 import com.miaoxing.nettank.net.ApiClient;
@@ -39,7 +41,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class StationDeliveryFragment extends Fragment {
+public class StationDeliveryFragment extends Fragment implements XRecyclerView.LoadingListener {
     @BindView(R.id.tv_tank)
     TextView tvTank;
     @BindView(R.id.tv_start_time)
@@ -47,7 +49,7 @@ public class StationDeliveryFragment extends Fragment {
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
     @BindView(R.id.rv_result)
-    RecyclerView mRvResult;
+    XRecyclerView mRvResult;
 
     TimePickerView startPicker;
     TimePickerView endPicker;
@@ -56,9 +58,11 @@ public class StationDeliveryFragment extends Fragment {
     private BottomPickerFragment pickerFragment;
     private String[] optionArray;
     private int mPosition = -1;
-    private int page = 1;
+    private int page;
     private List<RecordResponse> mRecordResponseList;
     private RecordAdapter mRecordAdapter;
+    private String startTime;
+    private String endTime;
 
     public StationDeliveryFragment() {
 
@@ -125,23 +129,30 @@ public class StationDeliveryFragment extends Fragment {
                 break;
             //查询
             case R.id.tv_search:
-                String startTime = tvStartTime.getText().toString();
+                startTime = tvStartTime.getText().toString();
                 if (TextUtils.isEmpty(startTime)) {
                     ToastUtils.showToast(getContext(), R.string.tip_start_time);
                     return;
                 }
-                String endTime = tvEndTime.getText().toString();
+                endTime = tvEndTime.getText().toString();
                 if (TextUtils.isEmpty(endTime)) {
                     ToastUtils.showToast(getContext(), R.string.tip_end_time);
                     return;
                 }
                 mRecordResponseList = new ArrayList<>();
+                page = 1;
+                mRvResult.setNoMore(false);
                 getRecords(startTime, endTime);
-
                 break;
         }
     }
 
+    /**
+     * 获取记录
+     *
+     * @param startTime
+     * @param endTime
+     */
     private void getRecords(String startTime, String endTime) {
         Map<String, Object> map = new HashMap<>();
         if (mPosition != -1) {
@@ -150,7 +161,7 @@ public class StationDeliveryFragment extends Fragment {
         map.put("StationID", stationID);
         map.put("start_time", startTime);
         map.put("end_time", endTime);
-        //map.put("page", page);
+        map.put("page", page);
         ApiClient.getService()
                 .getRecordList(map)
                 .subscribeOn(Schedulers.io())
@@ -163,17 +174,26 @@ public class StationDeliveryFragment extends Fragment {
 
                     @Override
                     public void onNext(Result<List<RecordResponse>> result) {
-                        if (result.getCode() == Constant.CODE_SUCCESS) {
-                            mRecordResponseList = result.getData();
-                            if(mRecordResponseList.size() == 0 || null ==mRecordResponseList){
-                                ToastUtils.showToast(getContext(), R.string.tip_result_null);
-                            }
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                            layoutManager.setOrientation(RecyclerView.VERTICAL);
-                            mRvResult.setLayoutManager(layoutManager);
-                            mRecordAdapter = new RecordAdapter(mRecordResponseList);
-                            mRvResult.setAdapter(mRecordAdapter);
+                        if (result.getCode() != Constant.CODE_SUCCESS) {
+                            return;
                         }
+                        if (page == 1) {
+                            mRecordResponseList = result.getData();
+                            if (mRecordResponseList.size() == 0) {
+                                ToastUtils.showToast(getContext(), R.string.tip_result_null);
+                            } else {
+                                initRecycler();
+                            }
+                        } else {
+                            if (result.getData().size() == 0) {
+                                mRvResult.setNoMore(true);
+                            } else {
+                                mRecordResponseList.addAll(result.getData());
+                                mRvResult.loadMoreComplete();
+                            }
+                            mRecordAdapter.notifyDataSetChanged();
+                        }
+                        ++page;
                     }
 
                     @Override
@@ -188,6 +208,26 @@ public class StationDeliveryFragment extends Fragment {
                 });
     }
 
+    /**
+     * 初始化RecyclerView
+     */
+    private void initRecycler() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        mRvResult.setLayoutManager(layoutManager);
+        mRvResult.setPullRefreshEnabled(false);
+        mRvResult.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
+        mRvResult.getDefaultFootView().setLoadingHint(getString(R.string.loading));
+        mRvResult.getDefaultFootView().setNoMoreHint(getString(R.string.load_no_more));
+        mRvResult.setLoadingListener(this);
+
+        mRecordAdapter = new RecordAdapter(mRecordResponseList);
+        mRvResult.setAdapter(mRecordAdapter);
+    }
+
+    /**
+     * 获取油罐列表
+     */
     private void getTankList() {
         ApiClient.getService()
                 .getTankList(stationID)
@@ -217,6 +257,11 @@ public class StationDeliveryFragment extends Fragment {
                 });
     }
 
+    /**
+     * 弹出油罐列表
+     *
+     * @param tankResponseResult
+     */
     private void pop(Result<List<TankResponse>> tankResponseResult) {
         if (tankResponseResult.getCode() == Constant.CODE_SUCCESS) {
             mTankResponseList = tankResponseResult.getData();
@@ -236,5 +281,15 @@ public class StationDeliveryFragment extends Fragment {
             });
             pickerFragment.show(getFragmentManager(), "alarm");
         }
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+        getRecords(startTime, endTime);
     }
 }

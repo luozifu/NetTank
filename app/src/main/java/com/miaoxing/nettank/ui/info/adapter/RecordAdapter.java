@@ -40,6 +40,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordHold
     @Override
     public void onBindViewHolder(@NonNull RecordHolder holder, int position) {
         Context context = holder.itemView.getContext();
+        holder.mNum.setText((position+1)+"");
         holder.mTvTankName.setText(mRecordResponseList.get(position).tankName);
         holder.mTvFuelName.setText(mRecordResponseList.get(position).fuelName);
         holder.mTvAddBefore.setText(context.getString(R.string.add_before)
@@ -74,6 +75,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordHold
         TextView mTvAddAfter;
         @BindView(R.id.tv_time)
         TextView mTvTime;
+        @BindView(R.id.tv_num)
+        TextView mNum;
 
         public RecordHolder(@NonNull View itemView) {
             super(itemView);
