@@ -1,4 +1,4 @@
-package com.miaoxing.nettank.ui.info.adapter;
+package com.miaoxing.nettank.ui.info.widget;
 
 import android.graphics.Color;
 
@@ -24,12 +24,14 @@ public class CombinedChartManager {
 
     private CombinedChart mCombinedChart;
     private YAxis leftAxis;
+    private YAxis rightAxis;
     private XAxis xAxis;
 
     public CombinedChartManager(CombinedChart combinedChart) {
         this.mCombinedChart = combinedChart;
         leftAxis = mCombinedChart.getAxisLeft();
         xAxis = mCombinedChart.getXAxis();
+        rightAxis = mCombinedChart.getAxisRight();
     }
 
     /**
@@ -61,7 +63,6 @@ public class CombinedChartManager {
         leftAxis.setDrawGridLines(true);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setSpaceTop(20f);
-
         mCombinedChart.animateX(1000); // 立即执行的动画,x轴
 
     }
@@ -86,7 +87,6 @@ public class CombinedChartManager {
                 return xAxisValues.get((int) value % xAxisValues.size());
             }
         });
-        mCombinedChart.invalidate();
     }
 
     /**
@@ -107,7 +107,6 @@ public class CombinedChartManager {
                 entries.add(new BarEntry(j, barChartYs.get(i).get(j)));
             }
             BarDataSet barDataSet = new BarDataSet(entries, barNames.get(i));
-
             barDataSet.setColor(barColors.get(i));
             barDataSet.setValueTextColor(Color.BLACK);
             barDataSet.setValueTextSize(10f);
@@ -125,6 +124,7 @@ public class CombinedChartManager {
         //barData.setBarWidth(barWidth);
         //(起始点、柱状图组间距、柱状图之间间距)
         //barData.groupBars(0, groupSpace, barSpace);
+
         //以下是为了解决 柱状图 左右两边只显示了一半的问题 根据实际情况 而定
         xAxis.setAxisMinimum(-0.5f);
         xAxis.setAxisMaximum((float) (amount- 0.5));
@@ -149,7 +149,7 @@ public class CombinedChartManager {
         CombinedData combinedData = new CombinedData();
 
         combinedData.setData(getBarData(barChartYs, barNames, barColors));
-
+        mCombinedChart.setDrawValueAboveBar(true);
         mCombinedChart.setData(combinedData);
         mCombinedChart.invalidate();
     }

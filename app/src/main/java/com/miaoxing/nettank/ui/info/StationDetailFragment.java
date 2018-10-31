@@ -14,7 +14,7 @@ import com.miaoxing.nettank.model.Fuel;
 import com.miaoxing.nettank.model.Tank;
 import com.miaoxing.nettank.net.ApiClient;
 import com.miaoxing.nettank.net.Result;
-import com.miaoxing.nettank.ui.info.adapter.CombinedChartManager;
+import com.miaoxing.nettank.ui.info.widget.CombinedChartManager;
 import com.miaoxing.nettank.ui.info.adapter.HistogramAdapter;
 import com.miaoxing.nettank.ui.info.adapter.TankAdapter;
 import com.miaoxing.nettank.ui.info.response.StationInfoResponse;
